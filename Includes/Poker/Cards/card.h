@@ -1,48 +1,23 @@
-#pragma once
+// Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-enum CardShape {
-    clover = 0,
-    heart,
-    diamond,
-    spade
-};
+#ifndef POKER_CARD_H
+#define POKER_CARD_H
 
-enum CardNumber {
-    two = 2,
-    three,
-    four,
-    five,
-    six,
-    seven,
-    eight,
-    nine,
-    ten,
-    jack,
-    queen,
-    king,
-    ace
-};
+#include <Poker/Cards/CardEnums.h>
 
-class Card {
-    private:
+namespace Poker
+{
+class Card
+{
+ public:
+    Card(CardShape shape, CardNumber number);
+
+    bool operator>(const Card &c);
+
+ private:
     const CardShape shape_;
     const CardNumber number_;
-
-    public:
-    Card(CardShape shape, CardNumber number);
-    void PrintCard();
-    bool operator > (Card &c);
 };
+}  // namespace Poker
 
-Card::Card(CardShape shape, CardNumber number) : shape_(shape), number_(number) {
-    // do nothing
-}
-
-void Card::PrintCard() {
-    std::cout << shape_ << ' ' << number_ << '\n';
-}
-
-bool Card::operator > (Card &c) {
-    if(number_ > c.number_) return true;
-    else return shape_ > c.shape_;
-}
+#endif  // POKER_CARD_H
