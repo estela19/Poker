@@ -35,7 +35,7 @@ class Card {
 };
 
 Card::Card(CardShape shape, CardNumber number) : shape_(shape), number_(number) {
-
+    // do nothing
 }
 
 void Card::PrintCard() {
