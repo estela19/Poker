@@ -1,6 +1,6 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-#include <Poker/Cards/card.h>
+#include <Poker/Cards/Card.h>
 
 #include <iostream>
 
