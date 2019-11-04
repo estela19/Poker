@@ -25,19 +25,24 @@ enum CardNumber {
 
 class Card {
     private:
-    CardShape shape;
-    CardNumber number;
+    const CardShape shape_;
+    const CardNumber number_;
 
     public:
+    Card(CardShape shape, CardNumber number);
     void PrintCard();
     bool operator > (Card &c);
 };
 
-bool Card::operator > (Card &c) {
-    if(shape > c.shape) return true;
-    else return number > c.number;
+Card::Card(CardShape shape, CardNumber number) : shape_(shape), number_(number) {
+
 }
 
 void Card::PrintCard() {
-    std::cout << shape << ' ' << number << '\n';
+    std::cout << shape_ << ' ' << number_ << '\n';
+}
+
+bool Card::operator > (Card &c) {
+    if(number_ > c.number_) return true;
+    else return shape_ > c.shape_;
 }
