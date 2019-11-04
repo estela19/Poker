@@ -4,9 +4,9 @@ set -e
 
 if [ $# -eq 0 ]
   then
-    docker build -t jyp10987/aichu .
+    docker build -t e9857256/poker .
 else
-    docker build -f $1 -t jyp10987/aichu:$2 .
+    docker build -f $1 -t e9857256/poker:$2 .
 fi
 
-docker run jyp10987/aichu
+docker run e9857256/poker
