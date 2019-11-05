@@ -1,20 +1,29 @@
-#ifndef _POKER_TASKENUMS_H
-#define _POKER_TASKENUMS_H
+#ifndef POKER_TASKENUMS_H
+#define POKER_TASKENUMS_H
+
+enum class TaskStatus
+{
+    INVALID,
+    STOP,
+    COMPLETE,
+
+    NUM_TASKSTATUS
+};
 
 enum class Betting
 {
-    Raise,
-    Check,
-	Ok,
-    Fold
+    RAISE,
+    CHECK,
+	OK,
+    FOLD
 };
 
 enum class CardAction
 {
-	Take,
-	Open,
-	Drop,
-	Shuffle
+	TAKE,
+	OPEN,
+	DROP,
+	SHUFFLE
 };
 
 #endif  //! _POKER_TASKENUMS_H
