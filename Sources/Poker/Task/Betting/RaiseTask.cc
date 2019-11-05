@@ -7,6 +7,7 @@ namespace Poker
 TaskStatus RaiseTask::Impl()
 {
     // TODO: Impl this
+    (void)money_;
 
     return TaskStatus::INVALID;
 }
