@@ -13,6 +13,14 @@ class Card
     Card(CardShape shape, CardNumber number);
 
     bool operator>(const Card &c);
+    bool operator<(const Card &c);
+    bool operator>=(const Card &c);
+    bool operator<=(const Card &c);
+    bool operator==(const Card &c);
+    bool operator!=(const Card &c);
+
+    CardShape Shape() const;
+    CardNumber Number() const;
 
  private:
     const CardShape shape_;
