@@ -12,7 +12,7 @@ namespace Poker
 class Player final
 {
  public:
-     using Ptr = std::unique_ptr<Player>;
+    using Ptr = std::unique_ptr<Player>;
 
  public:
     //! Default constructor
@@ -29,7 +29,7 @@ class Player final
 
     //! Delete move assignment operator
     Player& operator=(Player&&) = delete;
-    
+
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 

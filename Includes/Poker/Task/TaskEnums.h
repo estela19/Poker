@@ -1,6 +1,8 @@
 #ifndef POKER_TASKENUMS_H
 #define POKER_TASKENUMS_H
 
+namespace Poker
+{
 enum class TaskStatus
 {
     INVALID,
@@ -14,16 +16,17 @@ enum class Betting
 {
     RAISE,
     CHECK,
-	OK,
+    OK,
     FOLD
 };
 
 enum class CardAction
 {
-	TAKE,
-	OPEN,
-	DROP,
-	SHUFFLE
+    TAKE,
+    OPEN,
+    DROP,
+    SHUFFLE
 };
+}  // namespace Poker
 
 #endif  //! _POKER_TASKENUMS_H

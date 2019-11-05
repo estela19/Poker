@@ -26,4 +26,4 @@ enum class CardNumber
     KING,
     ACE
 };
-}
+}  // namespace Poker
