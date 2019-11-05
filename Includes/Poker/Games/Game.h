@@ -5,6 +5,8 @@
 
 #include <Poker/Games/Player.h>
 
+#include <vector>
+
 namespace Poker
 {
 class Game final

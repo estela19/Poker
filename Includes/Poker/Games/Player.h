@@ -3,9 +3,8 @@
 #ifndef POKER_PLAYER_H
 #define POKER_PLAYER_H
 
-#include <Poker/Cards/Card.h>
+#include <Poker/Cards/CardDeck.h>
 
-#include <vector>
 #include <memory>
 
 namespace Poker
@@ -30,9 +29,12 @@ class Player final
 
     //! Delete move assignment operator
     Player& operator=(Player&&) = delete;
+    
+    CardDeck& GetDeck();
+    const CardDeck& GetDeck() const;
 
  private:
-    std::vector<Card> cards_;
+    CardDeck deck_;
 };
 }  // namespace Poker
 
