@@ -10,44 +10,44 @@ TEST(CardTests, Operator)
         c2(CardShape::HEART, CardNumber::SIX),
         c3(CardShape::CLOVER, CardNumber::SIX),
         c4(CardShape::CLOVER, CardNumber::ACE),
-        c5(CardShape::HEART, CardNumber::SIX),
-        c6(CardShape::HEART, CardNumber::SIX);
+        c5(CardShape::HEART, CardNumber::SIX);
 
     EXPECT_TRUE(c1 > c2);
     EXPECT_TRUE(c1 > c3);
     EXPECT_TRUE(c2 > c3);
     EXPECT_FALSE(c5 > c4);
-    EXPECT_FALSE(c5 > c6);
+    EXPECT_FALSE(c2 > c5);
 
     EXPECT_TRUE(c1 >= c2);
     EXPECT_TRUE(c1 >= c3);
     EXPECT_TRUE(c2 >= c3);
     EXPECT_FALSE(c5 >= c4);
-    EXPECT_TRUE(c5 >= c6);
+    EXPECT_TRUE(c2 >= c5);
 
     EXPECT_FALSE(c1 < c2);
     EXPECT_FALSE(c1 < c3);
     EXPECT_FALSE(c2 < c3);
+    EXPECT_TRUE(c3 < c5);
     EXPECT_TRUE(c5 < c4);
-    EXPECT_FALSE(c5 < c6);
+    EXPECT_FALSE(c2 < c5);
 
     EXPECT_FALSE(c1 <= c2);
     EXPECT_FALSE(c1 <= c3);
     EXPECT_FALSE(c2 <= c3);
     EXPECT_TRUE(c5 <= c4);
-    EXPECT_TRUE(c5 <= c6);
+    EXPECT_TRUE(c2 <= c5);
 
     EXPECT_FALSE(c1 == c2);
     EXPECT_FALSE(c1 == c3);
     EXPECT_FALSE(c2 == c3);
     EXPECT_FALSE(c5 == c4);
-    EXPECT_TRUE(c5 == c6);
+    EXPECT_TRUE(c2 == c5);
 
     EXPECT_TRUE(c1 != c2);
     EXPECT_TRUE(c1 != c3);
     EXPECT_TRUE(c2 != c3);
     EXPECT_TRUE(c5 != c4);
-    EXPECT_FALSE(c5 != c6);
+    EXPECT_FALSE(c2 != c5);
 }
 
 TEST(CardTests, Constructor) {
