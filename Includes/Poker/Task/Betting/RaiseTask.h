@@ -4,7 +4,7 @@
 #define POKER_RAISE_TASK_H
 
 #include <Poker/Task/ITask.h>
-#include <Poker/Task/TaskStatus.h>
+#include <Poker/Task/TaskEnums.h>
 
 namespace Poker
 {
