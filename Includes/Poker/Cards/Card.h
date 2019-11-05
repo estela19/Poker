@@ -12,7 +12,15 @@ class Card
  public:
     Card(CardShape shape, CardNumber number);
 
-    bool operator>(const Card &c);
+    bool operator>(const Card& c) const;
+    bool operator<(const Card& c) const;
+    bool operator>=(const Card& c) const;
+    bool operator<=(const Card& c) const;
+    bool operator==(const Card& c) const;
+    bool operator!=(const Card& c) const;
+
+    CardShape Shape() const;
+    CardNumber Number() const;
 
  private:
     const CardShape shape_;
