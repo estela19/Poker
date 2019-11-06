@@ -4,6 +4,16 @@
 
 namespace Poker
 {
+void Player::SetMoney(std::size_t money)
+{
+    money_ = money;
+}
+
+std::size_t Player::GetMoney() const
+{
+    return money_;
+}
+
 CardDeck& Player::GetDeck()
 {
     return const_cast<CardDeck&>(static_cast<const Player&>(*this).GetDeck());

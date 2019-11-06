@@ -30,10 +30,15 @@ class Player final
     //! Delete move assignment operator
     Player& operator=(Player&&) = delete;
 
+    void SetMoney(std::size_t money);
+    std::size_t GetMoney() const;
+
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
  private:
+    std::size_t money_;
+
     CardDeck deck_;
 };
 }  // namespace Poker
