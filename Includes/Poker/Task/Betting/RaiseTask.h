@@ -14,7 +14,7 @@ class RaiseTask : public ITask
     RaiseTask(int money);
 
  private:
-    TaskStatus Impl() override;
+    TaskStatus Impl(Player& player) override;
 
  private:
     int money_;

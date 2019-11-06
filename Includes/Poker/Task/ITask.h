@@ -3,6 +3,7 @@
 #ifndef POKER_ITASK_H
 #define POKER_ITASK_H
 
+#include <Poker/Games/Player.h>
 #include <Poker/Task/TaskEnums.h>
 
 namespace Poker
@@ -24,10 +25,16 @@ class ITask
     //! Delete move assignment operator
     ITask& operator=(ITask&&) = delete;
 
+    void SetPlayer(const Player::Ptr& player);
+    const Player& GetPlayer() const;
+
     TaskStatus Run();
 
  private:
-    virtual TaskStatus Impl() = 0;
+    virtual TaskStatus Impl(Player& player) = 0;
+
+ private:
+    Player* player_ = nullptr;
 };
 }  // namespace Poker
 

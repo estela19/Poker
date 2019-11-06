@@ -6,8 +6,18 @@
 
 namespace Poker
 {
+void ITask::SetPlayer(const Player::Ptr& player)
+{
+    player_ = player.get();
+}
+
+const Player& ITask::GetPlayer() const
+{
+    return *player_;
+}
+
 TaskStatus ITask::Run()
 {
-    return Impl();
+    return Impl(*player_);
 }
 }  // namespace Poker

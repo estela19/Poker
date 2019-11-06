@@ -4,7 +4,7 @@
 
 namespace Poker
 {
-TaskStatus RaiseTask::Impl()
+TaskStatus RaiseTask::Impl([[maybe_unused]]Player& player)
 {
     // TODO: Impl this
     (void)money_;
