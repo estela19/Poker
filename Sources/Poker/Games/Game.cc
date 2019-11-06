@@ -6,7 +6,8 @@ namespace Poker
 {
 Player& Game::GetPlayer(std::size_t index)
 {
-    return *players_[index];
+    return const_cast<Player&>(
+        static_cast<const Game&>(*this).GetPlayer(index));
 }
 
 const Player& Game::GetPlayer(std::size_t index) const
