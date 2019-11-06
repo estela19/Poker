@@ -11,7 +11,7 @@ void CardDeck::AddCard(const Card& card)
 
 void CardDeck::RemoveCard(const Card& card)
 {
-    cards_.emplace(card);
+    cards_.erase(card);
 }
 
 const std::set<Card>& CardDeck::GetCards() const
