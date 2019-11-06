@@ -28,6 +28,7 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 # Includes
 include_directories(Includes)
+include_directories(Libraries/random/include)
 
 # Project modules
 add_subdirectory(Sources/Poker)
