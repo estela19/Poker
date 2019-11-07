@@ -9,6 +9,11 @@ using Random = effolkronium::random_static;
 
 namespace Poker
 {
+Game::Game(GameConfig config) : config_(std::move(config))
+{
+    // Do nothing
+}
+
 void Game::BeginTurn()
 {
     if (status_ != GameStatus::ENDED)
@@ -67,7 +72,7 @@ void Game::ProcessTurn()
     int cardsToGive = 1;
     if (now->GetDeck().Empty())
     {
-        cardsToGive = 3;
+        cardsToGive = config_.InitCard;
     }
 
     for (int i = 0; i < cardsToGive; ++i)

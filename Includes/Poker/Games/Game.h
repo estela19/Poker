@@ -3,6 +3,7 @@
 #ifndef POKER_GAME_H
 #define POKER_GAME_H
 
+#include <Poker/Games/GameConfig.h>
 #include <Poker/Games/GameEnums.h>
 #include <Poker/Games/Player.h>
 #include <Poker/Task/ITask.h>
@@ -16,10 +17,13 @@ namespace Poker
 class Game final
 {
  public:
+    Game(GameConfig config);
+
     template <typename PlayerT, typename... Args>
     void AddPlayer(Args&&... args)
     {
         players_.emplace_back(std::make_unique<PlayerT>(std::move(args)...));
+        players_.back()->SetMoney(config_.InitMoney);
     }
 
     void BeginTurn();
@@ -38,6 +42,7 @@ class Game final
     Card popCard();
 
  private:
+    GameConfig config_;
     GameStatus status_ = GameStatus::ENDED;
 
     int first_ = -1, now_ = -1;
