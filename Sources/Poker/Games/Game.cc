@@ -2,7 +2,10 @@
 
 #include <Poker/Games/Game.h>
 
+#include <effolkronium/random.hpp>
 #include <stdexcept>
+
+using Random = effolkronium::random_static;
 
 namespace Poker
 {
@@ -12,6 +15,19 @@ void Game::BeginTurn()
     {
         throw std::logic_error("Game hasn't ended");
     }
+
+    if (players_.size() <= 1)
+    {
+        throw std::logic_error("Player must be more than two");
+    }
+
+    fillCards();
+
+    if (first_ == -1)
+    {
+        first_ = Random::get<int>(0, players_.size());
+    }
+    now_ = first_;
 
     status_ = GameStatus::PLAYING;
 }
@@ -39,6 +55,16 @@ void Game::Process(std::size_t id, ITask&& task)
     task.Run();
 }
 
+void Game::ProcessTurn()
+{
+
+}
+
+const std::set<Card>& Game::LeftCards() const
+{
+    return cards_;
+}
+
 Player& Game::GetPlayer(std::size_t index)
 {
     return const_cast<Player&>(
@@ -53,5 +79,28 @@ const Player& Game::GetPlayer(std::size_t index) const
 std::size_t Game::GetPlayerCount() const
 {
     return players_.size();
+}
+
+void Game::fillCards()
+{
+    cards_.clear();
+
+    for (int shape = 0; shape < static_cast<int>(CardShape::COUNT); ++shape)
+    {
+        for (int number = 0; number < static_cast<int>(CardNumber::COUNT);
+             ++number)
+        {
+            cards_.emplace(static_cast<CardShape>(shape),
+                           static_cast<CardNumber>(number));
+        }
+    }
+}
+
+Card Game::popCard()
+{
+    auto card = *Random::get(cards_);
+
+    cards_.erase(card);
+    return card;
 }
 }  // namespace Poker

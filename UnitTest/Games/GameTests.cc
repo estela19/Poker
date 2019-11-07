@@ -6,6 +6,15 @@
 
 using namespace Poker;
 
+TEST(GameTests, BeginTurn)
+{
+    Game game;
+
+    game.BeginTurn();
+
+    EXPECT_EQ(game.LeftCards().size(), 52);
+}
+
 TEST(GameTests, AddPlayer)
 {
     Game game;

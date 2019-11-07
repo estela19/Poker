@@ -7,7 +7,8 @@ enum class CardShape
     CLOVER,
     HEART,
     DIAMOND,
-    SPADE
+    SPADE,
+    COUNT
 };
 
 enum class CardNumber
@@ -24,6 +25,7 @@ enum class CardNumber
     JACK,
     QUEEN,
     KING,
-    ACE
+    ACE,
+    COUNT
 };
 }  // namespace Poker

@@ -7,7 +7,9 @@
 #include <Poker/Games/Player.h>
 #include <Poker/Task/ITask.h>
 
+#include <set>
 #include <vector>
+#include <optional>
 
 namespace Poker
 {
@@ -23,15 +25,24 @@ class Game final
     void BeginTurn();
     void EndTurn();
     void Process(std::size_t id, ITask&& task);
+    void ProcessTurn();
+
+    const std::set<Card>& LeftCards() const;
 
     Player& GetPlayer(std::size_t index);
     const Player& GetPlayer(std::size_t index) const;
     std::size_t GetPlayerCount() const;
 
  private:
+    void fillCards();
+    Card popCard();
+
+ private:
     GameStatus status_ = GameStatus::ENDED;
 
+    int first_ = -1, now_ = -1;
     std::vector<Player::Ptr> players_;
+    std::set<Card> cards_;
 };
 }  // namespace Poker
 
