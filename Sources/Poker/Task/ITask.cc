@@ -2,8 +2,6 @@
 
 #include <Poker/Task/ITask.h>
 
-#include <iostream>
-
 namespace Poker
 {
 void ITask::SetPlayer(const Player::Ptr& player)
