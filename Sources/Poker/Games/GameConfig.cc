@@ -17,7 +17,7 @@ GameConfig LoadConfig(const std::string& filename)
     }
 
     nlohmann::json j;
-    j << file;
+    file >> j;
     file.close();
 
     GameConfig config;

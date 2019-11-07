@@ -22,9 +22,14 @@ class Card
     CardShape Shape() const;
     CardNumber Number() const;
 
+    void Flip();
+    bool IsOpen() const;
+
  private:
     const CardShape shape_;
     const CardNumber number_;
+
+    bool isOpen_ = false;
 };
 }  // namespace Poker
 
