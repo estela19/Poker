@@ -18,4 +18,9 @@ const std::set<Card>& CardDeck::GetCards() const
 {
     return cards_;
 }
+
+bool CardDeck::Empty() const
+{
+    return cards_.empty();
+}
 }  // namespace Poker

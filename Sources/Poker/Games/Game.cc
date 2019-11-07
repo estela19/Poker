@@ -57,7 +57,25 @@ void Game::Process(std::size_t id, ITask&& task)
 
 void Game::ProcessTurn()
 {
+    if (status_ != GameStatus::PLAYING)
+    {
+        throw std::logic_error("Game hasn't started");
+    }
 
+    Player* now = players_[now_].get();
+
+    int cardsToGive = 1;
+    if (now->GetDeck().Empty())
+    {
+        cardsToGive = 3;
+    }
+
+    for (int i = 0; i < cardsToGive; ++i)
+    {
+        now->GetDeck().AddCard(popCard());
+    }
+
+    // TODO: 플레이어에게 행동 요구하기.
 }
 
 const std::set<Card>& Game::LeftCards() const

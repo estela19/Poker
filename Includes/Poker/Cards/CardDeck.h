@@ -14,7 +14,9 @@ class CardDeck final
  public:
     void AddCard(const Card& card);
     void RemoveCard(const Card& card);
+
     const std::set<Card>& GetCards() const;
+    bool Empty() const;
 
  private:
     std::set<Card> cards_;
