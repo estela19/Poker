@@ -5,8 +5,20 @@
 
 #include <Poker/Games/Player.h>
 
+#include <memory>
+
 namespace Poker
 {
+class Node
+{
+ public:
+    using Ptr = std::unique_ptr<Node>;
+
+ public:
+    Node* next_;
+    Player* player_;
+};
+
 class Turn
 {
  public:
@@ -19,20 +31,10 @@ class Turn
     void PopNode();
 
  private:
-    Node::Ptr root_;
-    Node::Ptr now_;
+    Node* root_;
+    Node* now_;
 
 	void GoRoot();
-};
-
-class Node
-{
- public:
-    using Ptr = std::unique_ptr<Node>;
-
- public:
-    Node::Ptr next_;
-    Player::Ptr player_;
 };
 }  // namespace Poker
 

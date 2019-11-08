@@ -16,15 +16,15 @@ void Turn::GoNext()
 void Turn::InsertNode()
 {
     GoRoot();
-    Node::Ptr tmp = new Node();
-    tmp->next_ = std::move(now_->next_);
-    now_->next = std::move(tmp);
+    Node* tmp = new Node();
+    tmp->next_ = now_->next_;
+    now_->next_ = tmp;
 }
 
 //다음 노드를 삭제
 void Turn::PopNode()
 {
-    now_->next_ = std::move(now_->next_->next_);
+    now_->next_ = now_->next_->next_;
 }
 
 void Turn::GoRoot()
