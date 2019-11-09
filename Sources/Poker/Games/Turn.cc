@@ -4,34 +4,37 @@
 
 namespace Poker
 {
-void Turn::GoNext()
+void Turn::Next()
 {
-    while (now_->next_->player_->GetisDie() == true)
+    do
     {
         now_ = now_->next_;
-    }
+    } while (now_->player_->IsDie());
 }
 
-//루트 위치의 노드를 추가
-void Turn::InsertNode()
+Player* Turn::Current()
 {
-    GoRoot();
+    return now_->player_;
+}
+
+void Turn::Insert()
+{
+    goRoot();
     Node* tmp = new Node();
     tmp->next_ = now_->next_;
     now_->next_ = tmp;
 }
 
-//다음 노드를 삭제
-void Turn::PopNode()
+void Turn::Pop()
 {
     now_->next_ = now_->next_->next_;
 }
 
-void Turn::GoRoot()
+void Turn::goRoot()
 {
     while (root_ != now_)
     {
-        GoNext();
+        Next();
     }
 }
 

@@ -9,32 +9,28 @@
 
 namespace Poker
 {
-class Node
-{
- public:
-    using Ptr = std::unique_ptr<Node>;
-
- public:
-    Node* next_;
-    Player* player_;
-};
-
 class Turn
 {
+ private:
+    class Node
+    {
+     public:
+        Node* next_;
+        Player* player_;
+    };
+
  public:
-    void GoNext();
+    void Next();
+    Player* Current();
 
-	//루트 위치의 노드를 추가
-    void InsertNode();
-
-	//다음 위치의 노드를 삭제
-    void PopNode();
+    void Insert();
+    void Pop();
 
  private:
     Node* root_;
     Node* now_;
 
-	void GoRoot();
+    void goRoot();
 };
 }  // namespace Poker
 

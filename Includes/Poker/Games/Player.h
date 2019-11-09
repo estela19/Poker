@@ -36,14 +36,14 @@ class Player final
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
-	bool GetisDie() const;
+	bool IsDie() const;
 
  private:
     std::size_t money_;
 
     CardDeck deck_;
 
-	bool isDie_;
+	bool isDie_ = false;
 };
 }  // namespace Poker
 

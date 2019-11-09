@@ -6,6 +6,7 @@
 #include <Poker/Games/GameConfig.h>
 #include <Poker/Games/GameEnums.h>
 #include <Poker/Games/Player.h>
+#include <Poker/Games/Turn.h>
 #include <Poker/Task/ITask.h>
 
 #include <set>
@@ -45,7 +46,7 @@ class Game final
     GameConfig config_;
     GameStatus status_ = GameStatus::ENDED;
 
-    int first_ = -1, now_ = -1;
+    Turn turn_;
     std::vector<Player::Ptr> players_;
     std::set<Card> cards_;
 };

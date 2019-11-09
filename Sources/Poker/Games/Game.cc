@@ -27,13 +27,7 @@ void Game::BeginTurn()
     }
 
     fillCards();
-
-    if (first_ == -1)
-    {
-        first_ = Random::get<int>(0, players_.size());
-    }
-    now_ = first_;
-
+    
     status_ = GameStatus::PLAYING;
 }
 
@@ -67,7 +61,7 @@ void Game::ProcessTurn()
         throw std::logic_error("Game hasn't started");
     }
 
-    Player* now = players_[now_].get();
+    Player* now = turn_.Current();
 
     int cardsToGive = 1;
     if (now->GetDeck().Empty())

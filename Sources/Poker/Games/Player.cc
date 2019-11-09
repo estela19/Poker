@@ -23,4 +23,9 @@ const CardDeck& Player::GetDeck() const
 {
     return deck_;
 }
+
+bool Player::IsDie() const
+{
+    return isDie_;
+}
 }  // namespace Poker
