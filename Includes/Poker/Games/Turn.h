@@ -15,22 +15,24 @@ class Turn
     class Node
     {
      public:
-        Node* next_;
+        Node* prev_ = nullptr;
+        Node* next_ = nullptr;
         Player* player_;
     };
 
  public:
+    ~Turn();
+
     void Next();
     Player* Current();
+    std::size_t GetSize() const;
 
-    void Insert();
+    void Insert(Player::Ptr& player);
     void Pop();
 
  private:
-    Node* root_;
-    Node* now_;
-
-    void goRoot();
+    Node* now_ = nullptr;
+    std::size_t size_ = 0;
 };
 }  // namespace Poker
 
