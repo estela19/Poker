@@ -6,6 +6,7 @@
 #include <Poker/Cards/Card.h>
 
 #include <deque>
+#include <functional>
 
 namespace Poker
 {
