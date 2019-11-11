@@ -23,4 +23,9 @@ bool CardDeck::Empty() const
 {
     return cards_.empty();
 }
+
+DeckType CardDeck::GetType() const
+{
+    return DeckType::INVALID;
+}
 }  // namespace Poker

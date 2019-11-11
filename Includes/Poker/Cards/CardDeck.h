@@ -11,6 +11,7 @@ namespace Poker
 {
 enum class DeckType
 {
+    INVALID,
     ROYAL_STRAIGHT_FLUSH,
     BACK_STRAIGHT_FLUSH,
     STRAIGHT_FLUSH,
@@ -34,6 +35,8 @@ class CardDeck final
 
     const std::set<Card>& GetCards() const;
     bool Empty() const;
+
+    DeckType GetType() const;
 
  private:
     std::set<Card> cards_;
