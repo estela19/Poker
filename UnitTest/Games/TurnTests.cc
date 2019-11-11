@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 
 #include <Poker/Games/Turn.h>
+#include <Poker/Players/RandomPlayer.h>
+
 #include <iostream>
 
 using namespace Poker;
@@ -11,8 +13,8 @@ TEST(TurnTests, Insert)
 {
     Turn turn;
 
-    auto player1 = std::make_unique<Player>();
-    auto player2 = std::make_unique<Player>();
+    Player::Ptr player1 = std::make_unique<RandomPlayer>();
+    Player::Ptr player2 = std::make_unique<RandomPlayer>();
 
     player1->SetMoney(10000u);
     player2->SetMoney(20000u);
@@ -30,8 +32,8 @@ TEST(TurnTests, Pop)
 {
     Turn turn;
 
-    auto player1 = std::make_unique<Player>();
-    auto player2 = std::make_unique<Player>();
+    Player::Ptr player1 = std::make_unique<RandomPlayer>();
+    Player::Ptr player2 = std::make_unique<RandomPlayer>();
 
     EXPECT_NO_THROW(turn.Insert(player1));
     EXPECT_NO_THROW(turn.Insert(player2));
@@ -49,9 +51,9 @@ TEST(TurnTests, DeadPlayer)
 {
     Turn turn;
 
-    auto player1 = std::make_unique<Player>();
-    auto player2 = std::make_unique<Player>();
-    auto player3 = std::make_unique<Player>();
+    Player::Ptr player1 = std::make_unique<RandomPlayer>();
+    Player::Ptr player2 = std::make_unique<RandomPlayer>();
+    Player::Ptr player3 = std::make_unique<RandomPlayer>();
 
     player1->SetMoney(10000u);
     player2->SetMoney(20000u);

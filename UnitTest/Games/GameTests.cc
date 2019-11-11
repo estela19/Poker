@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include <Poker/Games/Game.h>
+#include <Poker/Players/RandomPlayer.h>
 
 using namespace Poker;
 
@@ -12,10 +13,10 @@ TEST(GameTests, BeginTurn)
 
     EXPECT_ANY_THROW(game.BeginTurn());
 
-    game.AddPlayer<Player>();
-    game.AddPlayer<Player>();
-    game.AddPlayer<Player>();
-    game.AddPlayer<Player>();
+    game.AddPlayer<RandomPlayer>();
+    game.AddPlayer<RandomPlayer>();
+    game.AddPlayer<RandomPlayer>();
+    game.AddPlayer<RandomPlayer>();
 
     EXPECT_NO_THROW(game.BeginTurn());
 
@@ -27,7 +28,7 @@ TEST(GameTests, AddPlayer)
     GameConfig config;
     Game game(config);
 
-    game.AddPlayer<Player>();
+    game.AddPlayer<RandomPlayer>();
     EXPECT_TRUE(game.GetPlayer(0).GetDeck().Empty());
     EXPECT_EQ(game.GetPlayer(0).GetMoney(), config.InitMoney);
 }
