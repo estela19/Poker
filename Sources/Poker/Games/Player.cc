@@ -2,6 +2,8 @@
 
 #include <Poker/Games/Player.h>
 
+#include <sstream>
+
 namespace Poker
 {
 void Player::SetMoney(std::size_t money)
@@ -32,5 +34,15 @@ void Player::SetDie(bool die)
 bool Player::IsDie() const
 {
     return isDie_;
+}
+
+std::string Player::ToString() const
+{
+    std::stringstream ss;
+
+    ss << "[Player] Money(" << money_ << ") Dead?(" << std::boolalpha << isDie_
+       << ")";
+
+    return ss.str();
 }
 }  // namespace Poker

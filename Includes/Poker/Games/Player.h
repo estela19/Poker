@@ -6,10 +6,11 @@
 #include <Poker/Cards/CardDeck.h>
 
 #include <memory>
+#include <string>
 
 namespace Poker
 {
-class Player final
+class Player
 {
  public:
     using Ptr = std::unique_ptr<Player>;
@@ -38,6 +39,8 @@ class Player final
 
     void SetDie(bool die);
 	bool IsDie() const;
+
+    virtual std::string ToString() const;
 
  private:
     std::size_t money_;
