@@ -10,10 +10,10 @@ namespace Poker
 {
 struct GameConfig final
 {
-    int InitCard = 3;
-    int MaxCard = 7;
-    int RaiseLimit = std::numeric_limits<int>::max();
-    int TimeLimit = std::numeric_limits<int>::max();
+    std::size_t InitCard = 3;
+    std::size_t MaxCard = 7;
+    std::size_t RaiseLimit = std::numeric_limits<int>::max();
+    std::size_t TimeLimit = std::numeric_limits<int>::max();
 
     std::size_t MaxBetMoney = std::numeric_limits<std::size_t>::max();
     std::size_t MinBetMoney = 0;
