@@ -24,6 +24,11 @@ const CardDeck& Player::GetDeck() const
     return deck_;
 }
 
+void Player::SetDie(bool die)
+{
+    isDie_ = die;
+}
+
 bool Player::IsDie() const
 {
     return isDie_;

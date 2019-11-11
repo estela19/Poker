@@ -36,6 +36,7 @@ class Player final
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
+    void SetDie(bool die);
 	bool IsDie() const;
 
  private:
