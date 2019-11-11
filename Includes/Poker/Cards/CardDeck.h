@@ -23,4 +23,18 @@ class CardDeck final
 };
 }  // namespace Poker
 
+namespace std
+{
+template <>
+struct hash<Poker::CardDeck>
+{
+    long long operator()(const Poker::CardDeck& t) const
+    {
+        long long cardList = (1 << 52) - 1;
+
+        return;
+    }
+};
+}  // namespace std
+
 #endif
