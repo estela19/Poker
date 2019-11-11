@@ -48,6 +48,8 @@ void Turn::Insert(Player::Ptr& player)
 
         tmp->next_ = now_->next_;
         now_->next_ = tmp;
+
+        now_ = tmp;
     }
 
     ++size_;
