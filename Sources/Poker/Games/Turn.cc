@@ -16,13 +16,13 @@ void Turn::Next()
 {
     do
     {
-        now_ = now_->next_;
-    } while (now_->player_->IsDie());
+        now_ = now_->next;
+    } while (now_->player->IsDie());
 }
 
 Player* Turn::Current()
 {
-    return now_->player_;
+    return now_->player;
 }
 
 std::size_t Turn::GetSize() const
@@ -32,24 +32,23 @@ std::size_t Turn::GetSize() const
 
 void Turn::Insert(Player::Ptr& player)
 {
-    Node* tmp = new Node;
-    tmp->player_ = player.get();
+    Node* node = new Node;
+    node->player = player.get();
 
     if (now_ == nullptr)
     {
-        now_ = tmp;
-        now_->prev_ = now_;
-        now_->next_ = now_;
+        now_ = node;
+        node->next = node;
     }
     else
     {
-        tmp->prev_ = now_;
-        now_->next_->prev_ = tmp;
+        Node* last = now_;
+        while (last->next != now_)
+            last = last->next;
 
-        tmp->next_ = now_->next_;
-        now_->next_ = tmp;
-
-        now_ = tmp;
+        node->next = now_;
+        now_ = node;
+        last->next = now_;
     }
 
     ++size_;
@@ -57,12 +56,28 @@ void Turn::Insert(Player::Ptr& player)
 
 void Turn::Pop()
 {
-    Node* node = now_;
+    if (now_ == nullptr)
+    {
+        return;
+    }
 
-    now_ = node->next_;
-    now_->prev_ = node->prev_;
+    Node* last = now_;
+    while (last->next != now_)
+        last = last->next;
 
-    delete node;
+    Node* tmp = now_;
+
+    if (last == now_)
+    {
+        now_ = nullptr;
+    }
+    else
+    {
+        now_ = now_->next;
+        last->next = now_;
+    }
+
+    delete tmp;
 
     --size_;
 }

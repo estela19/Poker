@@ -12,12 +12,10 @@ namespace Poker
 class Turn
 {
  private:
-    class Node
+    struct Node
     {
-     public:
-        Node* prev_ = nullptr;
-        Node* next_ = nullptr;
-        Player* player_;
+        Node* next = nullptr;
+        Player* player;
     };
 
  public:
