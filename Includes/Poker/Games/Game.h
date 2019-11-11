@@ -5,8 +5,8 @@
 
 #include <Poker/Games/GameConfig.h>
 #include <Poker/Games/GameEnums.h>
-#include <Poker/Games/Player.h>
 #include <Poker/Games/Turn.h>
+#include <Poker/Players/Player.h>
 #include <Poker/Task/ITask.h>
 
 #include <set>

@@ -22,12 +22,12 @@ class Card
     CardShape Shape() const;
     CardNumber Number() const;
 
-    void Flip();
+    void SetOpen(bool open);
     bool IsOpen() const;
 
  private:
-    const CardShape shape_;
-    const CardNumber number_;
+    CardShape shape_;
+    CardNumber number_;
 
     bool isOpen_ = false;
 };

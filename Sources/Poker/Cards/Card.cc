@@ -67,9 +67,9 @@ CardNumber Card::Number() const
     return number_;
 }
 
-void Card::Flip()
+void Card::SetOpen(bool open)
 {
-    isOpen_ = !isOpen_;
+    isOpen_ = open;
 }
 
 bool Card::IsOpen() const

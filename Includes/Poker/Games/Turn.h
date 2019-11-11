@@ -3,7 +3,7 @@
 #ifndef POKER_TURN_H
 #define POKER_TURN_H
 
-#include <Poker/Games/Player.h>
+#include <Poker/Players/Player.h>
 
 #include <memory>
 

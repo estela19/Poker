@@ -1,6 +1,6 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-#include <Poker/Games/Player.h>
+#include <Poker/Players/Player.h>
 
 #include <sstream>
 

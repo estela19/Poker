@@ -27,7 +27,7 @@ void Game::BeginTurn()
     }
 
     fillCards();
-    
+
     status_ = GameStatus::PLAYING;
 }
 
@@ -62,19 +62,27 @@ void Game::ProcessTurn()
     }
 
     Player* now = turn_.Current();
+    auto& deck = now->GetDeck();
 
     int cardsToGive = 1;
-    if (now->GetDeck().Empty())
+    if (deck.Empty())
     {
         cardsToGive = config_.InitCard;
     }
 
     for (int i = 0; i < cardsToGive; ++i)
     {
-        now->GetDeck().AddCard(popCard());
+        deck.AddCard(popCard());
     }
 
-    // TODO: 플레이어에게 행동 요구하기.
+    if (deck.Size() > config_.InitCard && deck.Size() < config_.MaxCard)
+    {
+        deck.GetCard(deck.Size() - 1).SetOpen(true);
+    }
+    else
+    {
+        deck.GetCard(now->RequireOpenCard()).SetOpen(true);
+    }
 }
 
 const std::set<Card>& Game::LeftCards() const

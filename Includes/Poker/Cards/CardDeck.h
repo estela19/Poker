@@ -5,7 +5,7 @@
 
 #include <Poker/Cards/Card.h>
 
-#include <set>
+#include <deque>
 
 namespace Poker
 {
@@ -33,13 +33,16 @@ class CardDeck final
     void AddCard(const Card& card);
     void RemoveCard(const Card& card);
 
-    const std::set<Card>& GetCards() const;
+    Card& GetCard(std::size_t index);
+    const Card& GetCard(std::size_t index) const;
+
+    std::size_t Size() const;
     bool Empty() const;
 
     DeckType GetType() const;
 
  private:
-    std::set<Card> cards_;
+    std::deque<Card> cards_;
 };
 }  // namespace Poker
 

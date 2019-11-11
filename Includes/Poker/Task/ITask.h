@@ -3,7 +3,7 @@
 #ifndef POKER_ITASK_H
 #define POKER_ITASK_H
 
-#include <Poker/Games/Player.h>
+#include <Poker/Players/Player.h>
 #include <Poker/Task/TaskEnums.h>
 
 namespace Poker

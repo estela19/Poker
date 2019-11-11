@@ -43,6 +43,8 @@ class Player
     void SetDie(bool die);
 	bool IsDie() const;
 
+    virtual std::size_t RequireOpenCard() const = 0;
+
     virtual std::string ToString() const;
 
  private:
