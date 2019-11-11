@@ -19,6 +19,9 @@ class Player
     //! Default constructor
     Player() = default;
 
+    //! Default destructor
+    virtual ~Player() = default;
+
     //! Delete copy constructor
     Player(const Player&) = delete;
 
