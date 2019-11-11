@@ -23,6 +23,7 @@ GameConfig LoadConfig(const std::string& filename)
     GameConfig config;
 
     config.InitCard = j["InitCard"];
+    config.MaxCard = j["MaxCard"];
     config.RaiseLimit = j["RaiseLimit"];
     config.TimeLimit = j["TimeLimit"];
 
@@ -37,6 +38,7 @@ void SaveConfig(const std::string& filename, const GameConfig& config)
 {
     nlohmann::json j;
     j["InitCard"] = config.InitCard;
+    j["MaxCard"] = config.MaxCard;
     j["RaiseLimit"] = config.RaiseLimit;
     j["TimeLimit"] = config.TimeLimit;
 
