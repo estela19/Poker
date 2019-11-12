@@ -13,7 +13,7 @@ enum class CardShape
 enum class CardNumber
 {
     TWO,
-    THREEE,
+    THREE,
     FOUR,
     FIVE,
     SIX,
