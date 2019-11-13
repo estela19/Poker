@@ -46,7 +46,7 @@ class Game final
 
  private:
     GameConfig config_;
-    GameStatus status_;
+    GameStatus status_ = GameStatus::INVALID;
 
     Turn turn_;
     std::vector<Player::Ptr> players_;

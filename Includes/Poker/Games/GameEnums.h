@@ -7,6 +7,7 @@ namespace Poker
 {
 enum class GameStatus
 {
+    INVALID,
     BEGIN_TURN,
     OPEN_CARDS,
     BETTING,
