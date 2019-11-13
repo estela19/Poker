@@ -1,5 +1,5 @@
 # Poker
-[![Build Status](https://travis-ci.org/estela19/Poker.svg?branch=doc)](https://travis-ci.org/estela19/Poker)
+[![Build Status](https://travis-ci.org/estela19/Poker.svg?branch=master)](https://travis-ci.org/estela19/Poker)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ed666f3b75d7460784186e2ea9f78741)](https://www.codacy.com/manual/estela19/Poker?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=estela19/Poker&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/estela19/Poker/branch/master/graph/badge.svg)](https://codecov.io/gh/estela19/Poker) 
