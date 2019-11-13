@@ -28,9 +28,11 @@ class Game final
     }
 
     void BeginTurn();
+    void OpenCard();
+    void Betting();
     void EndTurn();
+
     void Process(std::size_t id, ITask&& task);
-    void ProcessTurn();
 
     const std::set<Card>& LeftCards() const;
 
@@ -44,11 +46,13 @@ class Game final
 
  private:
     GameConfig config_;
-    GameStatus status_ = GameStatus::ENDED;
+    GameStatus status_;
 
     Turn turn_;
     std::vector<Player::Ptr> players_;
     std::set<Card> cards_;
+
+    friend class GameManager;
 };
 }  // namespace Poker
 

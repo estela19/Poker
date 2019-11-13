@@ -16,31 +16,18 @@ Game::Game(GameConfig config) : config_(std::move(config))
 
 void Game::BeginTurn()
 {
-    if (status_ != GameStatus::ENDED)
-    {
-        throw std::logic_error("Game hasn't ended");
-    }
+}
 
-    if (players_.size() <= 1)
-    {
-        throw std::logic_error("Player must be more than two");
-    }
+void Game::OpenCard()
+{
+}
 
-    fillCards();
-
-    status_ = GameStatus::PLAYING;
+void Game::Betting()
+{
 }
 
 void Game::EndTurn()
 {
-    if (status_ != GameStatus::PLAYING)
-    {
-        throw std::logic_error("Game hasn't started");
-    }
-
-    // TODO: 승패 판정 코드
-
-    status_ = GameStatus::ENDED;
 }
 
 void Game::Process(std::size_t id, ITask&& task)
@@ -52,37 +39,6 @@ void Game::Process(std::size_t id, ITask&& task)
 
     task.SetPlayer(players_[id]);
     task.Run();
-}
-
-void Game::ProcessTurn()
-{
-    if (status_ != GameStatus::PLAYING)
-    {
-        throw std::logic_error("Game hasn't started");
-    }
-
-    Player* now = turn_.Current();
-    auto& deck = now->GetDeck();
-
-    int cardsToGive = 1;
-    if (deck.Empty())
-    {
-        cardsToGive = config_.InitCard;
-    }
-
-    for (int i = 0; i < cardsToGive; ++i)
-    {
-        deck.AddCard(popCard());
-    }
-
-    if (deck.Size() > config_.InitCard && deck.Size() < config_.MaxCard)
-    {
-        deck.GetCard(deck.Size() - 1).SetOpen(true);
-    }
-    else
-    {
-        deck.GetCard(now->RequireOpenCard()).SetOpen(true);
-    }
 }
 
 const std::set<Card>& Game::LeftCards() const

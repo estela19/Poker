@@ -7,8 +7,10 @@ namespace Poker
 {
 enum class GameStatus
 {
-    PLAYING,
-    ENDED
+    BEGIN_TURN,
+    OPEN_CARDS,
+    BETTING,
+    END_TURN
 };
 }
 
