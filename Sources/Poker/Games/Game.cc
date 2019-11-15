@@ -42,8 +42,16 @@ void Game::OpenCard()
 
 void Game::Betting()
 {
+    auto& nowDeck = turn_.Current()->GetDeck();
+
     // 카드 하나를 나눠 줘야해
-    turn_.Current()->GetDeck().AddCard(popCard());
+    if (nowDeck.Size() >= config_.MaxCard)
+    {
+        throw std::logic_error("You already have max cards");
+	}
+
+    nowDeck.AddCard(popCard());
+
     // TODO : 선을 정해야해
     // TODO : 배팅을 해야해
 }
@@ -55,7 +63,7 @@ void Game::EndTurn()
     fillCards();
 
     // TODO : 승패판정
-    std::size_t winner;
+    std::size_t winner = 0;
 
     // 판돈 승자에게 줌
     GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());
