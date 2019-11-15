@@ -18,14 +18,14 @@ void Game::BeginTurn()
 {
     auto& nowDeck = turn_.Current()->GetDeck();
 
-    if (nowDeck.Size() != 0)
-    {
-        throw std::logic_error("Already game started");
-    }
-
     // 카드 나눠줘야해 (세장)
     for (int i = 0; i < turn_.GetSize(); ++i)
     {
+        if (nowDeck.Size() != 0)
+        {
+            throw std::logic_error("Already game started");
+        }
+
         for (int j = 0; j < config_.InitCard; ++j)
         {
             nowDeck.AddCard(popCard());
@@ -39,14 +39,17 @@ void Game::OpenCard()
     auto& nowDeck = turn_.Current()->GetDeck();
 
     // 카드 하나를 뒤집어야해
-    if (turn_.Current()->RequireOpenCard() >= nowDeck.Size())
-    {
-        throw std::logic_error("Invalid card id");
-    }
 
     for (int i = 0; i < turn_.GetSize(); ++i)
     {
-        nowDeck.GetCard(turn_.Current()->RequireOpenCard()).SetOpen(true);
+        std::size_t openCard = turn_.Current()->RequireOpenCard();
+
+        if (openCard >= nowDeck.Size())
+        {
+            throw std::logic_error("Invalid card id");
+        }
+
+        nowDeck.GetCard(openCard).SetOpen(true);
         turn_.Next();
     }
 }
@@ -55,13 +58,17 @@ void Game::Betting()
 {
     auto& nowDeck = turn_.Current()->GetDeck();
 
-    // 카드 하나를 나눠 줘야해
-    if (nowDeck.Size() >= config_.MaxCard)
+    for (int i = 0; i < turn_.GetSize(); ++i)
     {
-        throw std::logic_error("You already have max cards");
-    }
+        // 카드 하나를 나눠 줘야해
+        if (nowDeck.Size() >= config_.MaxCard)
+        {
+            throw std::logic_error("You already have max cards");
+        }
 
-    nowDeck.AddCard(popCard());
+        nowDeck.AddCard(popCard());
+        nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
+    }
 
     // TODO : 선을 정해야해
     // TODO : 배팅을 해야해
@@ -79,7 +86,7 @@ void Game::EndTurn()
     if (winner >= turn_.GetSize())
     {
         throw std::logic_error("Invalid winner id");
-	}
+    }
 
     // 판돈 승자에게 줌
     GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());

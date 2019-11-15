@@ -19,7 +19,7 @@ TEST(GameTests, BeginTurn)
     game.AddPlayer<RandomPlayer>();
 
     EXPECT_NO_THROW(game.BeginTurn());
-
+	
     EXPECT_EQ(game.LeftCards().size(), 52);
 }
 
