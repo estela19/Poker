@@ -28,6 +28,23 @@ class Turn
     void Insert(Player::Ptr& player);
     void Pop();
 
+    template <typename FuncT>
+    void ForEach(FuncT&& func)
+    {
+        if (now_->player->IsDie())
+        {
+            throw std::logic_error("Cannot start foreach with folded player");
+        }
+
+        Node* const first = now_;
+
+        do
+        {
+            func(now_->player);
+            Next();
+        } while (first != now_);
+    }
+
  private:
     Node* now_ = nullptr;
     std::size_t size_ = 0;

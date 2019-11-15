@@ -19,14 +19,14 @@ void Game::BeginTurn()
     auto& nowDeck = turn_.Current()->GetDeck();
 
     // 카드 나눠줘야해 (세장)
-    for (int i = 0; i < turn_.GetSize(); ++i)
+    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
     {
         if (nowDeck.Size() != 0)
         {
             throw std::logic_error("Already game started");
         }
 
-        for (int j = 0; j < config_.InitCard; ++j)
+        for (std::size_t j = 0; j < config_.InitCard; ++j)
         {
             nowDeck.AddCard(popCard());
         }
@@ -40,7 +40,7 @@ void Game::OpenCard()
 
     // 카드 하나를 뒤집어야해
 
-    for (int i = 0; i < turn_.GetSize(); ++i)
+    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
     {
         std::size_t openCard = turn_.Current()->RequireOpenCard();
 
@@ -58,7 +58,7 @@ void Game::Betting()
 {
     auto& nowDeck = turn_.Current()->GetDeck();
 
-    for (int i = 0; i < turn_.GetSize(); ++i)
+    turn_.ForEach([&](Player* player)
     {
         // 카드 하나를 나눠 줘야해
         if (nowDeck.Size() >= config_.MaxCard)
@@ -68,7 +68,7 @@ void Game::Betting()
 
         nowDeck.AddCard(popCard());
         nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
-    }
+    });
 
     // TODO : 선을 정해야해
     // TODO : 배팅을 해야해
