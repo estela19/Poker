@@ -16,18 +16,55 @@ Game::Game(GameConfig config) : config_(std::move(config))
 
 void Game::BeginTurn()
 {
+    // 카드 나눠줘야해 (세장)
+    for (int i = 0; i < turn_.GetSize(); ++i)
+    {
+        for (int j = 0; j < config_.InitCard; ++j)
+        {
+            turn_.Current()->GetDeck().AddCard(popCard());
+        }
+        turn_.Next();
+    }
 }
 
 void Game::OpenCard()
 {
+    // 카드 하나를 뒤집어야해
+    for (int i = 0; i < turn_.GetSize(); ++i)
+    {
+        turn_.Current()
+            ->GetDeck()
+            .GetCard(turn_.Current()->RequireOpenCard())
+            .SetOpen(true);
+        turn_.Next();
+    }
 }
 
 void Game::Betting()
 {
+    // 카드 하나를 나눠 줘야해
+    turn_.Current()->GetDeck().AddCard(popCard());
+    // TODO : 선을 정해야해
+    // TODO : 배팅을 해야해
 }
 
 void Game::EndTurn()
 {
+    // 카드set reset
+    cards_.clear();
+    fillCards();
+
+    // TODO : 승패판정
+    std::size_t winner;
+
+    // 판돈 승자에게 줌
+    GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());
+
+    // player isDie reset
+    for (int i = 0; i < turn_.GetSize(); ++i)
+    {
+        turn_.Current()->SetDie(false);
+    }
 }
 
 void Game::Process(std::size_t id, ITask&& task)
@@ -60,6 +97,21 @@ const Player& Game::GetPlayer(std::size_t index) const
 std::size_t Game::GetPlayerCount() const
 {
     return players_.size();
+}
+
+std::size_t Game::GetMoney() const
+{
+    return money_;
+}
+
+void Game::AddMoney(std::size_t money)
+{
+    money_ += money;
+}
+
+void Game::ResetMoney()
+{
+    money_ = 0;
 }
 
 void Game::fillCards()

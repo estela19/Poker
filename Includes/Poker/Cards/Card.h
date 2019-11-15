@@ -22,7 +22,7 @@ class Card
     CardShape Shape() const;
     CardNumber Number() const;
 
-    void SetOpen(bool open);
+    void SetOpen (bool open);
     bool IsOpen() const;
 
  private:

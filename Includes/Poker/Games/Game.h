@@ -9,9 +9,9 @@
 #include <Poker/Players/Player.h>
 #include <Poker/Task/ITask.h>
 
+#include <optional>
 #include <set>
 #include <vector>
-#include <optional>
 
 namespace Poker
 {
@@ -40,6 +40,10 @@ class Game final
     const Player& GetPlayer(std::size_t index) const;
     std::size_t GetPlayerCount() const;
 
+    std::size_t GetMoney() const;
+    void AddMoney(std::size_t money);
+    void ResetMoney();
+
  private:
     void fillCards();
     Card popCard();
@@ -51,6 +55,7 @@ class Game final
     Turn turn_;
     std::vector<Player::Ptr> players_;
     std::set<Card> cards_;
+    std::size_t money_;
 
     friend class GameManager;
 };
