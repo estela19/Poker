@@ -16,12 +16,19 @@ Game::Game(GameConfig config) : config_(std::move(config))
 
 void Game::BeginTurn()
 {
+    auto& nowDeck = turn_.Current()->GetDeck();
+
+    if (nowDeck.Size() != 0)
+    {
+        throw std::logic_error("Already game started");
+    }
+
     // 카드 나눠줘야해 (세장)
     for (int i = 0; i < turn_.GetSize(); ++i)
     {
         for (int j = 0; j < config_.InitCard; ++j)
         {
-            turn_.Current()->GetDeck().AddCard(popCard());
+            nowDeck.AddCard(popCard());
         }
         turn_.Next();
     }
@@ -29,13 +36,17 @@ void Game::BeginTurn()
 
 void Game::OpenCard()
 {
+    auto& nowDeck = turn_.Current()->GetDeck();
+
     // 카드 하나를 뒤집어야해
+    if (turn_.Current()->RequireOpenCard() >= nowDeck.Size())
+    {
+        throw std::logic_error("Invalid card id");
+    }
+
     for (int i = 0; i < turn_.GetSize(); ++i)
     {
-        turn_.Current()
-            ->GetDeck()
-            .GetCard(turn_.Current()->RequireOpenCard())
-            .SetOpen(true);
+        nowDeck.GetCard(turn_.Current()->RequireOpenCard()).SetOpen(true);
         turn_.Next();
     }
 }
@@ -48,7 +59,7 @@ void Game::Betting()
     if (nowDeck.Size() >= config_.MaxCard)
     {
         throw std::logic_error("You already have max cards");
-	}
+    }
 
     nowDeck.AddCard(popCard());
 
@@ -64,6 +75,11 @@ void Game::EndTurn()
 
     // TODO : 승패판정
     std::size_t winner = 0;
+
+    if (winner >= turn_.GetSize())
+    {
+        throw std::logic_error("Invalid winner id");
+	}
 
     // 판돈 승자에게 줌
     GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());
