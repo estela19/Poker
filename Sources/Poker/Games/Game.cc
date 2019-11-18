@@ -16,11 +16,27 @@ Game::Game(GameConfig config) : config_(std::move(config))
 
 void Game::BeginTurn()
 {
-    auto& nowDeck = turn_.Current()->GetDeck();
+    if (turn_.GetSize() == 0)
+    {
+        throw std::logic_error("No players inserted");
+    }
+
+    cards_.clear();
+    for (int shape = 0; shape < static_cast<int>(CardShape::COUNT); ++shape)
+    {
+        for (int number = 0; number < static_cast<int>(CardNumber::COUNT);
+             ++number)
+        {
+            cards_.emplace(static_cast<CardShape>(shape),
+                           static_cast<CardNumber>(number));
+        }
+    }
 
     // Ä«µå ³ª´²Áà¾ßÇØ (¼¼Àå)
     for (std::size_t i = 0; i < turn_.GetSize(); ++i)
     {
+        auto& nowDeck = turn_.Current()->GetDeck();
+
         if (nowDeck.Size() != 0)
         {
             throw std::logic_error("Already game started");
@@ -58,8 +74,7 @@ void Game::Betting()
 {
     auto& nowDeck = turn_.Current()->GetDeck();
 
-    turn_.ForEach([&](Player* player)
-    {
+    turn_.ForEach([&](Player* player) {
         // Ä«µå ÇÏ³ª¸¦ ³ª´² Áà¾ßÇØ
         if (nowDeck.Size() >= config_.MaxCard)
         {

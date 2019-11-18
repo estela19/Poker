@@ -9,7 +9,8 @@ using namespace Poker;
 
 TEST(GameTests, BeginTurn)
 {
-    Game game{ GameConfig() };
+    GameConfig config;
+    Game game{ config };
 
     EXPECT_ANY_THROW(game.BeginTurn());
 
@@ -20,7 +21,7 @@ TEST(GameTests, BeginTurn)
 
     EXPECT_NO_THROW(game.BeginTurn());
 	
-    EXPECT_EQ(game.LeftCards().size(), 52);
+    EXPECT_EQ(game.LeftCards().size(), 52 - config.InitCard * game.GetPlayerCount());
 }
 
 TEST(GameTests, AddPlayer)
