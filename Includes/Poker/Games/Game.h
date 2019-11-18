@@ -55,7 +55,7 @@ class Game final
     Turn turn_;
     std::vector<Player::Ptr> players_;
     std::set<Card> cards_;
-    std::size_t money_;
+    std::size_t money_ = 0;
 
     friend class GameManager;
 };

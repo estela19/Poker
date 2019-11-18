@@ -92,7 +92,7 @@ void Game::EndTurn()
     GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());
 
     // player isDie reset
-    for (int i = 0; i < turn_.GetSize(); ++i)
+    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
     {
         turn_.Current()->SetDie(false);
     }
