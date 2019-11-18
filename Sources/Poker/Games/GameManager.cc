@@ -23,6 +23,9 @@ void GameManager::ProcessGame(Game& game, GameStatus status)
         case GameStatus::END_TURN:
             game.EndTurn();
             break;
+
+        default:
+            break;
     }
 
     game.status_ = status;
