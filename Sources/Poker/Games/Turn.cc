@@ -2,6 +2,8 @@
 
 #include <Poker/Games/Turn.h>
 
+#include <stdexcept>
+
 namespace Poker
 {
 Turn::~Turn()
@@ -22,6 +24,11 @@ void Turn::Next()
 
 Player* Turn::Current()
 {
+    if (now_ == nullptr)
+    {
+        throw std::logic_error("No player inserted");
+    }
+
     return now_->player;
 }
 
