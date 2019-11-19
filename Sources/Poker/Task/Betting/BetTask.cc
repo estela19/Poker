@@ -32,13 +32,15 @@ TaskStatus BetTask::Impl([[maybe_unused]] Player& player)
     player.SetMoney(player.GetMoney() - money_);
     player.GetGame().AddMoney(money_);
 
-    player.GetGame().SetpreBetMoney(money_);
-    player.SetPreBet(money_);
+	player.GetGame().SetPreBetMoney(player.GetGame().GetPreBetMoney() + money_);
+    player.SetPreBet(player.GetPreBet() + money_);
+
+	player.GetGame().SetPreBetStat(TaskType::BET);
 
     return TaskStatus::COMPLETE;
 }
 
-BetTask::BetTask(std::size_t money) : money_(money)
+BetTask::BetTask(std::size_t money) : ITask(TaskType::BET), money_(money)
 {
     // Do nothing
 }

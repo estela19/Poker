@@ -38,7 +38,7 @@ class Game final
 
     void Process(std::size_t id, ITask&& task);
 
-	void ChoiceBetting(BettingStatus betting);
+	bool ChoiceBetting(TaskType betting);
 
     const std::set<Card>& LeftCards() const;
 
@@ -52,8 +52,10 @@ class Game final
     void AddMoney(std::size_t money);
     void ResetMoney();
 
-	std::size_t GetpreBetMoney() const;
-    void SetpreBetMoney(std::size_t money);
+	std::size_t GetPreBetMoney() const;
+    void SetPreBetMoney(std::size_t money);
+
+	void SetPreBetStat(TaskType task);
 
  private:
     void fillCards();
@@ -63,7 +65,7 @@ class Game final
     GameConfig config_;
     GameStatus status_ = GameStatus::INVALID;
 
-    BettingStatus preBetStat_ = BettingStatus::INVALID;
+    TaskType preBetStat_ = TaskType::INVALID;
     std::size_t preBetMoney_ = 0;
 
     Turn turn_;

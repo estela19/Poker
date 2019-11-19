@@ -86,7 +86,7 @@ void Game::Betting()
 
 void Game::EndTurn()
 {
-    // TODO : 승패판정
+    // TODO : 승패판정 (player가 한명만 남았을때도 고려)
     std::size_t winner = 0;
 
     if (winner >= turn_.GetSize())
@@ -104,11 +104,12 @@ void Game::EndTurn()
     }
 
     // preBetMoney reset
-    SetpreBetMoney(0);
+    SetPreBetMoney(0);
 
     //(player)preBet reset
     turn_.ForEach([&](Player* player) { player->SetPreBet(0); });
 }
+
 void Game::Process(std::size_t id, ITask&& task)
 {
     if (id >= players_.size())
@@ -120,66 +121,60 @@ void Game::Process(std::size_t id, ITask&& task)
     task.Run();
 }
 
-void Game::ChoiceBetting(BettingStatus betting)
+bool Game::ChoiceBetting(TaskType betting)
 {
     switch (preBetStat_)
     {
-        case BettingStatus::INVALID:
+        case TaskType::INVALID:
             switch (betting)
             {
-                case Poker::BettingStatus::BET:
-                    break;
-
-                case Poker::BettingStatus::CHECK:
-                    break;
-
-                case Poker::BettingStatus::FOLD:
-                    break;
+                case Poker::TaskType::BET:
+                case Poker::TaskType::CHECK:
+                case Poker::TaskType::FOLD:
+                    return true;
 
                 default:
-                    break;
+                    return false;
             }
 
-        case BettingStatus::BET:
+        case TaskType::BET:
             switch (betting)
             {
-                case Poker::BettingStatus::RAISE:
-                    break;
-                case Poker::BettingStatus::CALL:
-                    break;
-                case Poker::BettingStatus::FOLD:
-                    break;
+                case Poker::TaskType::RAISE:
+                case Poker::TaskType::CALL:
+                case Poker::TaskType::FOLD:
+                    return true;
+
                 default:
-                    break;
+                    return false;
             }
 
-        case BettingStatus::CHECK:
+        case TaskType::CHECK:
             switch (betting)
             {
-                case Poker::BettingStatus::RAISE:
-                    break;
-                case Poker::BettingStatus::CHECK:
-                    break;
-                case Poker::BettingStatus::FOLD:
-                    break;
+                case Poker::TaskType::RAISE:
+                case Poker::TaskType::CHECK:
+                case Poker::TaskType::FOLD:
+                    return true;
+
                 default:
-                    break;
+                    return false;
             }
-        case BettingStatus::RAISE:
+
+        case TaskType::RAISE:
             switch (betting)
             {
-                case Poker::BettingStatus::RAISE:
-                    break;
-                case Poker::BettingStatus::CALL:
-                    break;
-                case Poker::BettingStatus::FOLD:
-                    break;
+                case Poker::TaskType::RAISE:
+                case Poker::TaskType::CALL:
+                case Poker::TaskType::FOLD:
+                    return true;
+
                 default:
-                    break;
+                    return false;
             }
 
         default:
-            break;
+            throw std::logic_error("Can't choice Action");
     }
 }
 
@@ -223,14 +218,19 @@ void Game::ResetMoney()
     money_ = 0;
 }
 
-std::size_t Game::GetpreBetMoney() const
+std::size_t Game::GetPreBetMoney() const
 {
     return preBetMoney_;
 }
 
-void Game::SetpreBetMoney(std::size_t money)
+void Game::SetPreBetMoney(std::size_t money)
 {
     preBetMoney_ = money;
+}
+
+void Game::SetPreBetStat(TaskType task)
+{
+    preBetStat_ = task;
 }
 
 void Game::fillCards()

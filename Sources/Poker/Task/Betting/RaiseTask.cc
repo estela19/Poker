@@ -11,7 +11,7 @@ namespace Poker
 TaskStatus RaiseTask::Impl([[maybe_unused]] Player& player)
 {
     const GameConfig& config = player.GetGame().GetConfig();
-    const std::size_t& Bet = money_ + player.GetGame().GetpreBetMoney() - player.GetPreBet();
+    const std::size_t& bet = money_ + player.GetGame().GetPreBetMoney() - player.GetPreBet();
 
     // 최소배팅금액, 내 잔고, 최대배팅금액 확인
     if (config.MinBetMoney > money_)
@@ -24,15 +24,18 @@ TaskStatus RaiseTask::Impl([[maybe_unused]] Player& player)
         throw std::logic_error("Betting less money");
     }
 
-    if (player.GetMoney() < Bet)
+    if (player.GetMoney() < bet)
     {
         throw std::logic_error("Not enough money");
 	}
 
-    player.SetMoney(player.GetMoney() - Bet);
-    player.GetGame().AddMoney(Bet);
+    player.SetMoney(player.GetMoney() - bet);
+    player.GetGame().AddMoney(bet);
 
-    player.GetGame().SetpreBetMoney(player.GetGame().GetpreBetMoney() + money_);
+    player.GetGame().SetPreBetMoney(player.GetGame().GetPreBetMoney() + money_);
+    player.SetPreBet(player.GetPreBet() + bet);
+
+	player.GetGame().SetPreBetStat(TaskType::RAISE);
 
     return TaskStatus::COMPLETE;
 }

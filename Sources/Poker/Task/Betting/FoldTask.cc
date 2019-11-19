@@ -12,7 +12,7 @@ TaskStatus FoldTask::Impl([[maybe_unused]] Player& player)
     // card deck reset
     player.GetDeck().ResetDeck();
 
-    // preBetmoney reset
+    // prebet reset
     player.SetPreBet(0);
 
     return TaskStatus::COMPLETE;

@@ -2,10 +2,14 @@
 
 #include <Poker/Task/Betting/CheckTask.h>
 
+#include <Poker/Games/Game.h>
+
 namespace Poker
 {
 TaskStatus CheckTask::Impl([[maybe_unused]] Player& player)
 {
+    player.GetGame().SetPreBetStat(TaskType::CHECK);
+
     return TaskStatus::COMPLETE;
 }
 

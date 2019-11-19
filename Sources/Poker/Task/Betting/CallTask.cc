@@ -10,20 +10,21 @@ namespace Poker
 {
 TaskStatus CallTask::Impl([[maybe_unused]] Player& player)
 {
-	const std::size_t& bet = player.GetGame().GetpreBetMoney() - player.GetPreBet();
+	const std::size_t& bet = player.GetGame().GetPreBetMoney() - player.GetPreBet();
 
     // 최소배팅금액, 내 잔고, 최대배팅금액 확인
     
-    if (player.GetMoney() < player.GetGame().GetpreBetMoney())
+    if (player.GetMoney() < player.GetGame().GetPreBetMoney())
     {
         throw std::logic_error("Not enough money");
     }
 
     player.SetMoney(player.GetMoney() - bet);
     player.GetGame().AddMoney(bet);
-
 	
-    player.SetPreBet(player.GetGame().GetpreBetMoney());
+    player.SetPreBet(player.GetPreBet() + bet);
+
+	player.GetGame().SetPreBetStat(TaskType::CALL);
 
     return TaskStatus::COMPLETE;
 }

@@ -11,6 +11,7 @@ namespace Poker
 class ITask
 {
  public:
+    ITask(TaskType type);
     ITask() = default;
 
     //! Delete copy constructor
@@ -30,10 +31,13 @@ class ITask
 
     TaskStatus Run();
 
+    TaskType GetType() const;
+
  private:
     virtual TaskStatus Impl(Player& player) = 0;
 
  private:
+    TaskType type_;
     Player* player_ = nullptr;
 };
 }  // namespace Poker
