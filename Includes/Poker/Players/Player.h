@@ -6,10 +6,13 @@
 #include <Poker/Cards/CardDeck.h>
 
 #include <memory>
+#include <string>
 
 namespace Poker
 {
-class Player final
+class Game;
+
+class Player
 {
  public:
     using Ptr = std::unique_ptr<Player>;
@@ -17,6 +20,9 @@ class Player final
  public:
     //! Default constructor
     Player() = default;
+
+    //! Default destructor
+    virtual ~Player() = default;
 
     //! Delete copy constructor
     Player(const Player&) = delete;
@@ -30,11 +36,30 @@ class Player final
     //! Delete move assignment operator
     Player& operator=(Player&&) = delete;
 
+    void SetGame(Game* game);
+    Game& GetGame();
+    const Game& GetGame() const;
+
+    void SetMoney(std::size_t money);
+    std::size_t GetMoney() const;
+
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
+    void SetDie(bool die);
+	bool IsDie() const;
+
+    virtual std::size_t RequireOpenCard() const = 0;
+
+    virtual std::string ToString() const;
+
  private:
+    std::size_t money_;
+
     CardDeck deck_;
+    Game* game_;
+
+	bool isDie_ = false;
 };
 }  // namespace Poker
 

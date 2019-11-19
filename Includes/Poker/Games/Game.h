@@ -3,8 +3,14 @@
 #ifndef POKER_GAME_H
 #define POKER_GAME_H
 
-#include <Poker/Games/Player.h>
+#include <Poker/Games/GameConfig.h>
+#include <Poker/Games/GameEnums.h>
+#include <Poker/Games/Turn.h>
+#include <Poker/Players/Player.h>
+#include <Poker/Task/ITask.h>
 
+#include <optional>
+#include <set>
 #include <vector>
 
 namespace Poker
@@ -12,18 +18,49 @@ namespace Poker
 class Game final
 {
  public:
+    Game(GameConfig config);
+
     template <typename PlayerT, typename... Args>
     void AddPlayer(Args&&... args)
     {
         players_.emplace_back(std::make_unique<PlayerT>(std::move(args)...));
+        players_.back()->SetMoney(config_.InitMoney);
+        players_.back()->SetGame(this);
+
+        turn_.Insert(players_.back());
     }
+
+    void BeginTurn();
+    void OpenCard();
+    void Betting();
+    void EndTurn();
+
+    void Process(std::size_t id, ITask&& task);
+
+    const std::set<Card>& LeftCards() const;
 
     Player& GetPlayer(std::size_t index);
     const Player& GetPlayer(std::size_t index) const;
     std::size_t GetPlayerCount() const;
 
+    std::size_t GetMoney() const;
+    void AddMoney(std::size_t money);
+    void ResetMoney();
+
  private:
+    void fillCards();
+    Card popCard();
+
+ private:
+    GameConfig config_;
+    GameStatus status_ = GameStatus::INVALID;
+
+    Turn turn_;
     std::vector<Player::Ptr> players_;
+    std::set<Card> cards_;
+    std::size_t money_ = 0;
+
+    friend class GameManager;
 };
 }  // namespace Poker
 
