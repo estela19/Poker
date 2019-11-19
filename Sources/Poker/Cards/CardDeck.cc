@@ -16,6 +16,11 @@ void CardDeck::RemoveCard(const Card& card)
     cards_.erase(std::find(cards_.begin(), cards_.end(), card));
 }
 
+void CardDeck::ResetDeck()
+{
+    cards_.clear();
+}
+
 Card& CardDeck::GetCard(std::size_t index)
 {
     return const_cast<Card&>(

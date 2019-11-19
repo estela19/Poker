@@ -11,13 +11,11 @@ namespace Poker
 class CheckTask : public ITask
 {
  public:
-    CheckTask(int money);
+    CheckTask();
 
  private:
     TaskStatus Impl(Player& player) override;
 
- private:
-    int money_;
 };
 }  // namespace Poker
 

@@ -43,6 +43,9 @@ class Player
     void SetMoney(std::size_t money);
     std::size_t GetMoney() const;
 
+	void SetPreBet(std::size_t money);
+    std::size_t GetPreBet() const;
+
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
@@ -55,6 +58,7 @@ class Player
 
  private:
     std::size_t money_;
+    std::size_t preBet_;
 
     CardDeck deck_;
     Game* game_;

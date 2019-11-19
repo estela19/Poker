@@ -8,16 +8,14 @@
 
 namespace Poker
 {
-class CALLTask : public ITask
+class CallTask : public ITask
 {
  public:
-    CALLTask(int money);
+    CallTask();
 
  private:
     TaskStatus Impl(Player& player) override;
 
- private:
-    int money_;
 };
 }  // namespace Poker
 

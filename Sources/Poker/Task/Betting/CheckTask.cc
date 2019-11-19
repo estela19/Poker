@@ -6,13 +6,10 @@ namespace Poker
 {
 TaskStatus CheckTask::Impl([[maybe_unused]] Player& player)
 {
-    // TODO: Impl this
-    (void)money_;
-
-    return TaskStatus::INVALID;
+    return TaskStatus::COMPLETE;
 }
 
-CheckTask::CheckTask(int money) : money_(money)
+CheckTask::CheckTask()
 {
     // Do nothing
 }

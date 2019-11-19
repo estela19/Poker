@@ -87,6 +87,8 @@ void Game::Betting()
 
     // TODO : 선을 정해야해
     // TODO : 배팅을 해야해
+
+	// TODO : 배팅 끝나는 조건
 }
 
 void Game::EndTurn()
@@ -111,8 +113,13 @@ void Game::EndTurn()
     {
         turn_.Current()->SetDie(false);
     }
-}
 
+	//preBetMoney reset
+    SetpreBetMoney(0);
+
+	//(player)preBet reset
+    turn_.ForEach([&](Player* player) { player->SetPreBet(0); });
+}
 void Game::Process(std::size_t id, ITask&& task)
 {
     if (id >= players_.size())
@@ -122,6 +129,11 @@ void Game::Process(std::size_t id, ITask&& task)
 
     task.SetPlayer(players_[id]);
     task.Run();
+}
+
+void Game::ChoiceBetting(BettingStatus betting)
+{
+  //TODO : implement choice betting  
 }
 
 const std::set<Card>& Game::LeftCards() const
@@ -145,6 +157,10 @@ std::size_t Game::GetPlayerCount() const
     return players_.size();
 }
 
+const GameConfig& Game::GetConfig() const
+{
+    return config_;
+}
 std::size_t Game::GetMoney() const
 {
     return money_;
@@ -158,6 +174,16 @@ void Game::AddMoney(std::size_t money)
 void Game::ResetMoney()
 {
     money_ = 0;
+}
+
+std::size_t Game::GetpreBetMoney() const
+{
+    return preBetMoney_;
+}
+
+void Game::SetpreBetMoney(std::size_t money)
+{
+    preBetMoney_ = money;
 }
 
 void Game::fillCards()

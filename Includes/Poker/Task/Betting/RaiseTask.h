@@ -11,13 +11,13 @@ namespace Poker
 class RaiseTask : public ITask
 {
  public:
-    RaiseTask(int money);
+    RaiseTask(std::size_t money);
 
  private:
     TaskStatus Impl(Player& player) override;
 
  private:
-    int money_;
+    std::size_t money_;
 };
 }  // namespace Poker
 

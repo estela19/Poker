@@ -6,13 +6,19 @@ namespace Poker
 {
 TaskStatus FoldTask::Impl([[maybe_unused]] Player& player)
 {
-    // TODO: Impl this
-    (void)money_;
+	// player die
+    player.SetDie(true);
 
-    return TaskStatus::INVALID;
+    // card deck reset
+    player.GetDeck().ResetDeck();
+
+    // preBetmoney reset
+    player.SetPreBet(0);
+
+    return TaskStatus::COMPLETE;
 }
 
-FoldTask::FoldTask(int money) : money_(money)
+FoldTask::FoldTask()
 {
     // Do nothing
 }

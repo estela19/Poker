@@ -12,13 +12,14 @@ enum class TaskStatus
     NUM_TASKSTATUS
 };
 
-enum class Betting
+enum class BettingStatus
 {
-	BET,
-    RAISE,
-    CHECK,
-    CALL,
-    FOLD
+    INVALID,
+	BET,	//money
+    RAISE,	//money
+    CHECK,	//
+    CALL,	//
+    FOLD	//
 };
 
 enum class CardAction
