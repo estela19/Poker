@@ -2,6 +2,8 @@
 
 #include <Poker/Games/Game.h>
 
+#include <Poker/Games/GameManager.h>
+
 #include <effolkronium/random.hpp>
 #include <stdexcept>
 
@@ -22,15 +24,7 @@ void Game::BeginTurn()
     }
 
     cards_.clear();
-    for (int shape = 0; shape < static_cast<int>(CardShape::COUNT); ++shape)
-    {
-        for (int number = 0; number < static_cast<int>(CardNumber::COUNT);
-             ++number)
-        {
-            cards_.emplace(static_cast<CardShape>(shape),
-                           static_cast<CardNumber>(number));
-        }
-    }
+    fillCards();
 
     // 카드 나눠줘야해 (세장)
     for (std::size_t i = 0; i < turn_.GetSize(); ++i)
@@ -48,16 +42,20 @@ void Game::BeginTurn()
         }
         turn_.Next();
     }
+
+    if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::OPEN_CARDS);
+    }
 }
 
 void Game::OpenCard()
 {
-    auto& nowDeck = turn_.Current()->GetDeck();
-
     // 카드 하나를 뒤집어야해
 
     for (std::size_t i = 0; i < turn_.GetSize(); ++i)
     {
+        auto& nowDeck = turn_.Current()->GetDeck();
         std::size_t openCard = turn_.Current()->RequireOpenCard();
 
         if (openCard >= nowDeck.Size())
@@ -74,29 +72,20 @@ void Game::Betting()
 {
     auto& nowDeck = turn_.Current()->GetDeck();
 
-    turn_.ForEach([&](Player* player) {
-        // 카드 하나를 나눠 줘야해
-        if (nowDeck.Size() >= config_.MaxCard)
-        {
-            throw std::logic_error("You already have max cards");
-        }
+    if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard)
+    {
+        GameManager::ProcessGame(*this, GameStatus::END_TURN);
+    }
 
-        nowDeck.AddCard(popCard());
+    nowDeck.AddCard(popCard());
+    if (nowDeck.Size() != config_.MaxCard)
+    {
         nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
-    });
-
-    // TODO : 선을 정해야해
-    // TODO : 배팅을 해야해
-
-	// TODO : 배팅 끝나는 조건
+    }
 }
 
 void Game::EndTurn()
 {
-    // 카드set reset
-    cards_.clear();
-    fillCards();
-
     // TODO : 승패판정
     std::size_t winner = 0;
 
@@ -114,10 +103,10 @@ void Game::EndTurn()
         turn_.Current()->SetDie(false);
     }
 
-	//preBetMoney reset
+    // preBetMoney reset
     SetpreBetMoney(0);
 
-	//(player)preBet reset
+    //(player)preBet reset
     turn_.ForEach([&](Player* player) { player->SetPreBet(0); });
 }
 void Game::Process(std::size_t id, ITask&& task)
@@ -133,7 +122,7 @@ void Game::Process(std::size_t id, ITask&& task)
 
 void Game::ChoiceBetting(BettingStatus betting)
 {
-  //TODO : implement choice betting  
+    // TODO : implement choice betting
 }
 
 const std::set<Card>& Game::LeftCards() const
