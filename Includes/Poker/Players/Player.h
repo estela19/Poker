@@ -10,6 +10,8 @@
 
 namespace Poker
 {
+class Game;
+
 class Player
 {
  public:
@@ -34,6 +36,10 @@ class Player
     //! Delete move assignment operator
     Player& operator=(Player&&) = delete;
 
+    void SetGame(Game* game);
+    Game& GetGame();
+    const Game& GetGame() const;
+
     void SetMoney(std::size_t money);
     std::size_t GetMoney() const;
 
@@ -51,6 +57,7 @@ class Player
     std::size_t money_;
 
     CardDeck deck_;
+    Game* game_;
 
 	bool isDie_ = false;
 };

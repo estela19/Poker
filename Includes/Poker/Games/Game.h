@@ -25,6 +25,7 @@ class Game final
     {
         players_.emplace_back(std::make_unique<PlayerT>(std::move(args)...));
         players_.back()->SetMoney(config_.InitMoney);
+        players_.back()->SetGame(this);
 
         turn_.Insert(players_.back());
     }

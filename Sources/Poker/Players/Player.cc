@@ -21,6 +21,21 @@ CardDeck& Player::GetDeck()
     return const_cast<CardDeck&>(static_cast<const Player&>(*this).GetDeck());
 }
 
+void Player::SetGame(Game* game)
+{
+    game_ = game;
+}
+
+Game& Player::GetGame()
+{
+    return const_cast<Game&>(static_cast<const Player&>(*this).GetGame());
+}
+
+const Game& Player::GetGame() const
+{
+    return *game_;
+}
+
 const CardDeck& Player::GetDeck() const
 {
     return deck_;
