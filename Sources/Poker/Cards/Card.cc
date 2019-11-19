@@ -66,4 +66,14 @@ CardNumber Card::Number() const
 {
     return number_;
 }
+
+void Card::SetOpen(bool open)
+{
+    isOpen_ = open;
+}
+
+bool Card::IsOpen() const
+{
+    return isOpen_;
+}
 }  // namespace Poker

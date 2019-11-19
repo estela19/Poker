@@ -14,9 +14,10 @@ enum class TaskStatus
 
 enum class Betting
 {
+	BET,
     RAISE,
     CHECK,
-    OK,
+    CALL,
     FOLD
 };
 
