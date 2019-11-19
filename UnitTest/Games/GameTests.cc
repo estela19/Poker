@@ -10,6 +10,8 @@ using namespace Poker;
 TEST(GameTests, BeginTurn)
 {
     GameConfig config;
+    config.AutoPlay = false;
+
     Game game{ config };
 
     EXPECT_ANY_THROW(game.BeginTurn());
@@ -27,6 +29,8 @@ TEST(GameTests, BeginTurn)
 TEST(GameTests, AddPlayer)
 {
     GameConfig config;
+    config.AutoPlay = false;
+
     Game game(config);
 
     game.AddPlayer<RandomPlayer>();
