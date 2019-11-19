@@ -122,7 +122,65 @@ void Game::Process(std::size_t id, ITask&& task)
 
 void Game::ChoiceBetting(BettingStatus betting)
 {
-    // TODO : implement choice betting
+    switch (preBetStat_)
+    {
+        case BettingStatus::INVALID:
+            switch (betting)
+            {
+                case Poker::BettingStatus::BET:
+                    break;
+
+                case Poker::BettingStatus::CHECK:
+                    break;
+
+                case Poker::BettingStatus::FOLD:
+                    break;
+
+                default:
+                    break;
+            }
+
+        case BettingStatus::BET:
+            switch (betting)
+            {
+                case Poker::BettingStatus::RAISE:
+                    break;
+                case Poker::BettingStatus::CALL:
+                    break;
+                case Poker::BettingStatus::FOLD:
+                    break;
+                default:
+                    break;
+            }
+
+        case BettingStatus::CHECK:
+            switch (betting)
+            {
+                case Poker::BettingStatus::RAISE:
+                    break;
+                case Poker::BettingStatus::CHECK:
+                    break;
+                case Poker::BettingStatus::FOLD:
+                    break;
+                default:
+                    break;
+            }
+        case BettingStatus::RAISE:
+            switch (betting)
+            {
+                case Poker::BettingStatus::RAISE:
+                    break;
+                case Poker::BettingStatus::CALL:
+                    break;
+                case Poker::BettingStatus::FOLD:
+                    break;
+                default:
+                    break;
+            }
+
+        default:
+            break;
+    }
 }
 
 const std::set<Card>& Game::LeftCards() const
