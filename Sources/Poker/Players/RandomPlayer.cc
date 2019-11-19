@@ -11,7 +11,7 @@ std::size_t RandomPlayer::RequireOpenCard() const
 {
     using Random = effolkronium::random_static;
 
-    return Random::get<std::size_t>(0u, GetDeck().Size());
+    return Random::get<std::size_t>(0u, GetDeck().Size() - 1);
 }
 
 std::string RandomPlayer::ToString() const
