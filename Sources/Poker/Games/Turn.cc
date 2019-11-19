@@ -88,5 +88,4 @@ void Turn::Pop()
 
     --size_;
 }
-
 }  // namespace Poker
