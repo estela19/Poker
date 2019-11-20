@@ -48,7 +48,8 @@ DeckType CardDecks::GetFlush(const std::set<Card>& deck,
 {
     const int flushIdx =
         std::find(std::begin(shape), std::end(shape), 5) - std::begin(shape);
-    int flushNumber[13];
+    std::array<int, 13> flushNumber;
+    flushNumber.fill(0);
 
     for (const auto& card : deck)
     {
