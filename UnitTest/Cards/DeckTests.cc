@@ -265,3 +265,23 @@ TEST(DeckTests, GetTop)
 
     EXPECT_EQ(cd.GetType(), DeckType::TOP);
 }
+
+TEST(DeckTests, GetOpen)
+{
+    CardDeck cd;
+    Card c1(CardShape::CLOVER, CardNumber::TWO),
+        c2(CardShape::HEART, CardNumber::TWO),
+        c3(CardShape::DIAMOND, CardNumber::THREE),
+        c4(CardShape::SPADE, CardNumber::THREE);
+
+    c3.SetOpen(true);
+    c4.SetOpen(true);
+
+    cd.AddCard(c1);
+    cd.AddCard(c2);
+    cd.AddCard(c3);
+    cd.AddCard(c4);
+
+    EXPECT_EQ(cd.GetType(), DeckType::TWO_PAIR);
+    EXPECT_EQ(cd.GetOpenType(), DeckType::ONE_PAIR);
+}
