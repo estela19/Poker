@@ -47,7 +47,7 @@ DeckType CardDecks::GetFlush(const std::set<Card>& deck,
                              const std::array<int, 4>& shape)
 {
     const int flushIdx =
-        std::find(std::begin(shape), std::end(shape), 5) - std::begin(shape);
+        std::find(shape.begin(), shape.end(), 5) - shape.begin();
     std::array<int, 13> flushNumber;
     flushNumber.fill(0);
 
@@ -86,8 +86,8 @@ DeckType CardDecks::GetNonFlush(const std::array<int, 13>& number)
     if (numberMax == 3)
     {
         const std::size_t triIdx =
-            std::find(std::begin(number), std::end(number), 3) -
-            std::begin(number);
+            std::find(number.begin(), number.end(), 3) -
+            number.begin();
         for (std::size_t i = 0; i < 13; i++)
         {
             if (i != triIdx && number[i] >= 2)
