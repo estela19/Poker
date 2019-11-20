@@ -6,6 +6,7 @@
 #include <Poker/Cards/CardDeck.h>
 
 #include <set>
+#include <array>
 
 namespace Poker
 {
