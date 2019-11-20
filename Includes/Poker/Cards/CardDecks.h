@@ -5,30 +5,20 @@
 
 #include <Poker/Cards/CardDeck.h>
 
-#include <unordered_map>
+#include <array>
+#include <set>
 
 namespace Poker
 {
 class CardDecks
 {
  public:
-    DeckType Get(const CardDeck& deck) const;
+    static DeckType Get(const std::set<Card>& deck);
 
  private:
-    void initRoyalStraightFlush();
-    void initBackStraightFlush();
-    void initStraightFlush();
-    void initFourofaKind();
-    void initFullHouse();
-    void initFlush();
-    void initMountain();
-    void initStraight();
-    void initThreeofaKind();
-    void initTwoPair();
-    void initOnePair();
-    void initTop();
-
-    std::unordered_map<CardDeck, DeckType> decks_;
+    static DeckType getFlush(const std::set<Card>& deck,
+                             const std::array<int, 4>& shape);
+    static DeckType getNonFlush(const std::array<int, 13>& number);
 };
 }  // namespace Poker
 

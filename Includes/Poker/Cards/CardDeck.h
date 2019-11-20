@@ -6,7 +6,7 @@
 #include <Poker/Cards/Card.h>
 
 #include <deque>
-#include <functional>
+#include <set>
 
 namespace Poker
 {
@@ -34,6 +34,7 @@ class CardDeck final
     void AddCard(const Card& card);
     void RemoveCard(const Card& card);
 
+    std::set<Card> GetCardSet() const;
     Card& GetCard(std::size_t index);
     const Card& GetCard(std::size_t index) const;
 
@@ -41,24 +42,11 @@ class CardDeck final
     bool Empty() const;
 
     DeckType GetType() const;
+    DeckType GetOpenType() const;
 
  private:
     std::deque<Card> cards_;
 };
 }  // namespace Poker
-
-namespace std
-{
-template <>
-struct hash<Poker::CardDeck>
-{
-    long long operator()(const Poker::CardDeck& t) const
-    {
-        [[maybe_unused]] long long cardList = (1ll << 52) - 1;
-
-        return 0;
-    }
-};
-}  // namespace std
 
 #endif
