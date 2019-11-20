@@ -49,4 +49,17 @@ DeckType CardDeck::GetType() const
 {
     return CardDecks::Get(GetCardSet());
 }
+
+DeckType CardDeck::GetOpenType() const
+{
+    std::set<Card> ret;
+
+    for (const auto& card : cards_)
+    {
+        if (card.IsOpen())
+            ret.emplace(card);
+    }
+
+    return CardDecks::Get(ret);
+}
 }  // namespace Poker

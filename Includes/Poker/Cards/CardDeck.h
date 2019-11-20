@@ -42,6 +42,7 @@ class CardDeck final
     bool Empty() const;
 
     DeckType GetType() const;
+    DeckType GetOpenType() const;
 
  private:
     std::deque<Card> cards_;
