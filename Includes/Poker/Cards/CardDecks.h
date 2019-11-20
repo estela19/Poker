@@ -13,6 +13,11 @@ class CardDecks
 {
  public:
     static DeckType Get(const std::set<Card>& deck);
+
+ private:
+    static DeckType GetFlush(const std::set<Card>& deck,
+                             const std::array<int, 4>& shape);
+    static DeckType GetNonFlush(const std::array<int, 13>& number);
 };
 }  // namespace Poker
 
