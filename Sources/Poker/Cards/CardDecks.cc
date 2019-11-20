@@ -77,8 +77,7 @@ DeckType CardDecks::getFlush(const std::set<Card>& deck,
 
 DeckType CardDecks::getNonFlush(const std::array<int, 13>& number)
 {
-    const int numberMax =
-        *std::max_element(number.begin(), number.end());
+    const int numberMax = *std::max_element(number.begin(), number.end());
 
     if (numberMax == 4)
         return DeckType::FOUR_OF_A_KIND;
@@ -86,8 +85,7 @@ DeckType CardDecks::getNonFlush(const std::array<int, 13>& number)
     if (numberMax == 3)
     {
         const std::size_t triIdx =
-            std::find(number.begin(), number.end(), 3) -
-            number.begin();
+            std::find(number.begin(), number.end(), 3) - number.begin();
         for (std::size_t i = 0; i < 13; i++)
         {
             if (i != triIdx && number[i] >= 2)
