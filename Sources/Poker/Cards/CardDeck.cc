@@ -1,6 +1,7 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
 #include <Poker/Cards/CardDeck.h>
+#include <Poker/Cards/CardDecks.h>
 
 #include <algorithm>
 
@@ -14,6 +15,13 @@ void CardDeck::AddCard(const Card& card)
 void CardDeck::RemoveCard(const Card& card)
 {
     cards_.erase(std::find(cards_.begin(), cards_.end(), card));
+}
+
+std::set<Card> CardDeck::GetCardSet() const
+{
+    std::set<Card> ret(cards_.begin(), cards_.end());
+
+    return ret;
 }
 
 Card& CardDeck::GetCard(std::size_t index)
@@ -39,6 +47,6 @@ std::size_t CardDeck::Size() const
 
 DeckType CardDeck::GetType() const
 {
-    return DeckType::INVALID;
+    return CardDecks::Get(GetCardSet());
 }
 }  // namespace Poker
