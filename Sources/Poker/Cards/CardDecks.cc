@@ -21,7 +21,7 @@ DeckType CardDecks::Get(const std::set<Card>& deck)
         number[static_cast<int>(card.Number())]++;
     }
 
-    const int shapeMax = *std::max_element(std::begin(shape), std::end(shape));
+    const int shapeMax = *std::max_element(shape.begin(), shape.end());
 
     for (const auto& i : shape)
     {
@@ -78,7 +78,7 @@ DeckType CardDecks::GetFlush(const std::set<Card>& deck,
 DeckType CardDecks::GetNonFlush(const std::array<int, 13>& number)
 {
     const int numberMax =
-        *std::max_element(std::begin(number), std::end(number));
+        *std::max_element(number.begin(), number.end());
 
     if (numberMax == 4)
         return DeckType::FOUR_OF_A_KIND;
@@ -113,7 +113,7 @@ DeckType CardDecks::GetNonFlush(const std::array<int, 13>& number)
 
     if (numberMax == 2)
     {
-        if (std::count(std::begin(number), std::end(number), 2) > 1)
+        if (std::count(number.begin(), number.end(), 2) > 1)
             return DeckType::TWO_PAIR;
 
         return DeckType::ONE_PAIR;
