@@ -68,19 +68,33 @@ void Game::OpenCard()
     }
 }
 
+void Game::PreBetting()
+{
+    // 카드 나눠주기
+    turn_.ForEach([&](Player* player) {
+        auto& nowDeck = player->GetDeck();
+        nowDeck.AddCard(popCard());
+        nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
+    });
+
+    // TODO : 선 정하기
+
+    if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::BETTING);
+    }
+}
+
 void Game::Betting()
 {
-    auto& nowDeck = turn_.Current()->GetDeck();
-
-    if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard)
+    ITask::Ptr task = turn_.Current()->RequireBetting();
+    Process(task.get());
+        // card가 maxcard개면 endturn
+        auto& nowDeck = turn_.Current()->GetDeck();
+    if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard &&
+        turn_.GetSize() == 1)
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
-    }
-
-    nowDeck.AddCard(popCard());
-    if (nowDeck.Size() != config_.MaxCard)
-    {
-        nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
     }
 }
 
@@ -110,15 +124,16 @@ void Game::EndTurn()
     turn_.ForEach([&](Player* player) { player->SetPreBet(0); });
 }
 
-void Game::Process(std::size_t id, ITask&& task)
+void Game::Process(ITask* task)
 {
-    if (id >= players_.size())
+    Player* player = turn_.Current();
+    if (player->IsDie())
     {
         throw std::logic_error("Invalid player id");
     }
 
-    task.SetPlayer(players_[id]);
-    task.Run();
+    task->SetPlayer(player);
+    task->Run();
 }
 
 bool Game::ChoiceBetting(TaskType betting)

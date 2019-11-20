@@ -126,6 +126,6 @@ TEST(GameTests, ChoiceBetting)
     EXPECT_FALSE(game.ChoiceBetting(TaskType::FOLD));
     EXPECT_FALSE(game.ChoiceBetting(TaskType::RAISE));
 
-    EXPECT_ANY_THROW(game.Process(0, BetTask(config.MinBetMoney - 1u)));
-	EXPECT_NO_THROW(game.Process(0, BetTask(1000u)));
+    EXPECT_ANY_THROW(game.Process(std::make_unique<BetTask>(config.MinBetMoney - 1u).get()));
+	EXPECT_NO_THROW(game.Process(std::make_unique<BetTask>(1000u).get()));
 }

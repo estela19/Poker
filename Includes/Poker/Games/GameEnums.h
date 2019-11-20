@@ -10,6 +10,7 @@ enum class GameStatus
     INVALID,
     BEGIN_TURN,
     OPEN_CARDS,
+	PRE_BETTING,
     BETTING,
     END_TURN
 };

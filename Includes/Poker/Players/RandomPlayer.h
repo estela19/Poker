@@ -5,12 +5,16 @@
 
 #include <Poker/Players/Player.h>
 
+#include <Poker/Task/TaskEnums.h>
+
 namespace Poker
 {
 class RandomPlayer : public Player
 {
  public:
     std::size_t RequireOpenCard() const override;
+
+	ITask::Ptr RequireBetting() const override;
 
     std::string ToString() const override;
 };

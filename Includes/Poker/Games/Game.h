@@ -33,12 +33,13 @@ class Game final
 
     void BeginTurn();
     void OpenCard();
+    void PreBetting();
     void Betting();
     void EndTurn();
 
-    void Process(std::size_t id, ITask&& task);
+    void Process(ITask* task);
 
-	bool ChoiceBetting(TaskType betting);
+    bool ChoiceBetting(TaskType betting);
 
     const std::set<Card>& LeftCards() const;
 
@@ -52,10 +53,10 @@ class Game final
     void AddMoney(std::size_t money);
     void ResetMoney();
 
-	std::size_t GetPreBetMoney() const;
+    std::size_t GetPreBetMoney() const;
     void SetPreBetMoney(std::size_t money);
 
-	void SetPreBetStat(TaskType task);
+    void SetPreBetStat(TaskType task);
 
  private:
     void fillCards();

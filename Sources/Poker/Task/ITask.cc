@@ -9,9 +9,9 @@ ITask::ITask(TaskType type) : type_(type)
     // Do nothing
 }
 
-void ITask::SetPlayer(const Player::Ptr& player)
+void ITask::SetPlayer(Player* player)
 {
-    player_ = player.get();
+    player_ = player;
 }
 
 const Player& ITask::GetPlayer() const

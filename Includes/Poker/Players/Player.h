@@ -4,6 +4,7 @@
 #define POKER_PLAYER_H
 
 #include <Poker/Cards/CardDeck.h>
+#include <Poker/Task/ITask.h>
 
 #include <memory>
 #include <string>
@@ -53,6 +54,8 @@ class Player
 	bool IsDie() const;
 
     virtual std::size_t RequireOpenCard() const = 0;
+
+	virtual ITask::Ptr RequireBetting() const = 0;
 
     virtual std::string ToString() const;
 

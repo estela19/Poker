@@ -3,14 +3,19 @@
 #ifndef POKER_ITASK_H
 #define POKER_ITASK_H
 
-#include <Poker/Players/Player.h>
 #include <Poker/Task/TaskEnums.h>
+#include <memory>
 
 namespace Poker
 {
+class Player;
+
 class ITask
 {
  public:
+	using Ptr = std::unique_ptr<ITask>;
+
+public:
     ITask(TaskType type);
     ITask() = default;
 
@@ -26,7 +31,7 @@ class ITask
     //! Delete move assignment operator
     ITask& operator=(ITask&&) = delete;
 
-    void SetPlayer(const Player::Ptr& player);
+    void SetPlayer(Player* player);
     const Player& GetPlayer() const;
 
     TaskStatus Run();
