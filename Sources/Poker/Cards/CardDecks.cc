@@ -3,7 +3,6 @@
 #include <Poker/Cards/CardDecks.h>
 
 #include <algorithm>
-#include <array>
 
 namespace Poker
 {
@@ -50,7 +49,6 @@ DeckType CardDecks::GetFlush(const std::set<Card>& deck,
     const int flushIdx =
         std::find(std::begin(shape), std::end(shape), 5) - std::begin(shape);
     int flushNumber[13];
-    memset(flushNumber, 0, sizeof(flushNumber));
 
     for (const auto& card : deck)
     {
