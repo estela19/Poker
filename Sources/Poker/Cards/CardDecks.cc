@@ -37,13 +37,13 @@ DeckType CardDecks::Get(const std::set<Card>& deck)
 
     if (shapeMax == 5)
     {
-        return GetFlush(deck, shape);
+        return getFlush(deck, shape);
     }
 
-    return GetNonFlush(number);
+    return getNonFlush(number);
 }
 
-DeckType CardDecks::GetFlush(const std::set<Card>& deck,
+DeckType CardDecks::getFlush(const std::set<Card>& deck,
                              const std::array<int, 4>& shape)
 {
     const int flushIdx =
@@ -75,7 +75,7 @@ DeckType CardDecks::GetFlush(const std::set<Card>& deck,
     return DeckType::FLUSH;
 }
 
-DeckType CardDecks::GetNonFlush(const std::array<int, 13>& number)
+DeckType CardDecks::getNonFlush(const std::array<int, 13>& number)
 {
     const int numberMax =
         *std::max_element(number.begin(), number.end());
