@@ -11,7 +11,7 @@ TaskStatus FoldTask::Impl([[maybe_unused]] Player& player)
     player.SetDie(true);
 
     // card deck reset
-    player.GetDeck().ResetDeck();
+    player.GetDeck().Clear();
 
     // prebet reset
     player.SetPreBet(0);

@@ -33,7 +33,7 @@ class CardDeck final
  public:
     void AddCard(const Card& card);
     void RemoveCard(const Card& card);
-    void ResetDeck();
+    void Clear();
 
     std::set<Card> GetCardSet() const;
     Card& GetCard(std::size_t index);
