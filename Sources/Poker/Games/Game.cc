@@ -120,8 +120,11 @@ void Game::EndTurn()
     // preBetMoney reset
     SetPreBetMoney(0);
 
-    //(player)preBet reset
-    turn_.ForEach([&](Player* player) { player->SetPreBet(0); });
+    // Reset players
+    turn_.ForEach([&](Player* player) {
+        player->SetPreBet(0);
+        player->GetDeck().Clear();
+    });
 }
 
 void Game::Process(ITask* task)

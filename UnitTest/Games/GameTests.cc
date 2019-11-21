@@ -82,7 +82,7 @@ TEST(GameTests, Betting)
 
     EXPECT_NO_THROW(game.BeginTurn());
     EXPECT_NO_THROW(game.OpenCard());
-    EXPECT_NO_THROW(game.Betting());
+    EXPECT_NO_THROW(game.PreBetting());
 
     EXPECT_EQ(
         game.LeftCards().size(),
@@ -116,7 +116,7 @@ TEST(GameTests, ChoiceBetting)
 
     EXPECT_NO_THROW(game.BeginTurn());
     EXPECT_NO_THROW(game.OpenCard());
-    EXPECT_NO_THROW(game.Betting());
+    EXPECT_NO_THROW(game.PreBetting());
 
 	EXPECT_TRUE(game.ChoiceBetting(TaskType::BET));
     EXPECT_TRUE(game.ChoiceBetting(TaskType::INVALID));
