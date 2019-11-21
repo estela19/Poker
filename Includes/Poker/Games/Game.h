@@ -13,6 +13,7 @@
 #include <optional>
 #include <set>
 #include <vector>
+#include <utility>
 
 namespace Poker
 {

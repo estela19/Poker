@@ -4,6 +4,8 @@
 
 #include <Poker/Games/GameManager.h>
 
+#include <Poker/Cards/CardDecks.h>
+
 #include <effolkronium/random.hpp>
 #include <stdexcept>
 
@@ -73,11 +75,26 @@ void Game::PreBetting()
     // 카드 나눠주기
     turn_.ForEach([&](Player* player) {
         auto& nowDeck = player->GetDeck();
-        nowDeck.AddCard(popCard());
+        nowDeck.AddCard(popCard().SetOpen);
         nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
     });
 
-    // TODO : 선 정하기
+    // 받은 패가 가장 좋은 사람을 선 플레이어로 결정
+    std::vector<std::pair<std::size_t, Player*>> deckRank;
+    turn_.ForEach([&](Player* player) {
+        deckRank.push_back(
+            std::make_pair(static_cast<std::size_t>(
+                               CardDecks::Get(player->GetDeck().GetCardSet())),
+                           player));
+    });
+
+	 const Player* first = std::min_element(deckRank.begin(), deckRank.end())->second;
+
+	 // 선 플레이어를 turn의 now로 설정
+	 while (turn_.Current() != first)
+     {
+         turn_.Next();
+	 }
 
     if (config_.AutoPlay)
     {
@@ -89,8 +106,9 @@ void Game::Betting()
 {
     ITask::Ptr task = turn_.Current()->RequireBetting();
     Process(task.get());
-        // card가 maxcard개면 endturn
-        auto& nowDeck = turn_.Current()->GetDeck();
+
+    // card가 maxcard개면 endturn
+    auto& nowDeck = turn_.Current()->GetDeck();
     if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard &&
         turn_.GetSize() == 1)
     {
@@ -100,16 +118,32 @@ void Game::Betting()
 
 void Game::EndTurn()
 {
-    // TODO : 승패판정 (player가 한명만 남았을때도 고려)
-    std::size_t winner = 0;
+    Player* winner;
 
-    if (winner >= turn_.GetSize())
+    // 모든 플레이어가 fold를 선언해서 한명만 남았을 경우
+    if (turn_.GetSize() == 1)
     {
-        throw std::logic_error("Invalid winner id");
+        winner = turn_.Current();
+    }
+
+    else
+    {  // pair의 첫번째 인자 : 가지고 있는 패(enum의 int형), 두번째 인자 : 그
+       // 패의 주인
+        std::vector<std::pair<std::size_t, Player*>> deckRank;
+        turn_.ForEach([&](Player* player) {
+            deckRank.push_back(std::make_pair(
+                static_cast<std::size_t>(
+                    CardDecks::Get(player->GetDeck().GetCardSet())),
+                player));
+        });
+
+        //패의 우선순위가 가장높은(enum의 int형이 가장 작은) 사람의 포인터를
+        // winner에 전달
+        winner = std::min_element(deckRank.begin(), deckRank.end())->second;
     }
 
     // 판돈 승자에게 줌
-    GetPlayer(winner).SetMoney(GetMoney() + GetPlayer(winner).GetMoney());
+    winner->SetMoney(GetMoney() + winner->GetMoney());
 
     // player isDie reset
     for (std::size_t i = 0; i < turn_.GetSize(); ++i)
