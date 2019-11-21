@@ -119,11 +119,11 @@ TEST(GameTests, ChoiceBetting)
     EXPECT_NO_THROW(game.PreBetting());
 
 	EXPECT_TRUE(game.ChoiceBetting(TaskType::BET));
-    EXPECT_TRUE(game.ChoiceBetting(TaskType::INVALID));
+    EXPECT_TRUE(game.ChoiceBetting(TaskType::FOLD));
+    EXPECT_TRUE(game.ChoiceBetting(TaskType::CHECK));
 
+	EXPECT_FALSE(game.ChoiceBetting(TaskType::INVALID));
     EXPECT_FALSE(game.ChoiceBetting(TaskType::CALL));
-    EXPECT_FALSE(game.ChoiceBetting(TaskType::CHECK));
-    EXPECT_FALSE(game.ChoiceBetting(TaskType::FOLD));
     EXPECT_FALSE(game.ChoiceBetting(TaskType::RAISE));
 
     EXPECT_ANY_THROW(game.Process(std::make_unique<BetTask>(config.MinBetMoney - 1u).get()));
