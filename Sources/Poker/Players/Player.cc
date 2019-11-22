@@ -2,6 +2,8 @@
 
 #include <Poker/Players/Player.h>
 
+#include <Poker/Games/Game.h>
+
 #include <sstream>
 
 namespace Poker
@@ -14,6 +16,16 @@ void Player::SetMoney(std::size_t money)
 std::size_t Player::GetMoney() const
 {
     return money_;
+}
+
+void Player::SetPreBet(std::size_t money)
+{
+    preBet_ = money;
+}
+
+std::size_t Player::GetPreBet() const
+{
+    return preBet_;
 }
 
 CardDeck& Player::GetDeck()

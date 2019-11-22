@@ -4,9 +4,14 @@
 
 namespace Poker
 {
-void ITask::SetPlayer(const Player::Ptr& player)
+ITask::ITask(TaskType type) : type_(type)
 {
-    player_ = player.get();
+    // Do nothing
+}
+
+void ITask::SetPlayer(Player* player)
+{
+    player_ = player;
 }
 
 const Player& ITask::GetPlayer() const
@@ -17,5 +22,10 @@ const Player& ITask::GetPlayer() const
 TaskStatus ITask::Run()
 {
     return Impl(*player_);
+}
+
+TaskType ITask::GetType() const
+{
+    return type_;
 }
 }  // namespace Poker

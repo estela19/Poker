@@ -1,18 +1,25 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
+#include <Poker/Players/Player.h>
 #include <Poker/Task/Betting/FoldTask.h>
 
 namespace Poker
 {
-TaskStatus FoldTask::Impl([[maybe_unused]] Player& player)
+TaskStatus FoldTask::Impl(Player& player)
 {
-    // TODO: Impl this
-    (void)money_;
+    // player die
+    player.SetDie(true);
 
-    return TaskStatus::INVALID;
+    // card deck reset
+    player.GetDeck().Clear();
+
+    // prebet reset
+    player.SetPreBet(0);
+
+    return TaskStatus::COMPLETE;
 }
 
-FoldTask::FoldTask(int money) : money_(money)
+FoldTask::FoldTask()
 {
     // Do nothing
 }

@@ -8,10 +8,12 @@
 #include <Poker/Games/Turn.h>
 #include <Poker/Players/Player.h>
 #include <Poker/Task/ITask.h>
+#include <Poker/Task/TaskEnums.h>
 
 #include <optional>
 #include <set>
 #include <vector>
+#include <utility>
 
 namespace Poker
 {
@@ -32,10 +34,13 @@ class Game final
 
     void BeginTurn();
     void OpenCard();
+    void PreBetting();
     void Betting();
     void EndTurn();
 
-    void Process(std::size_t id, ITask&& task);
+    void Process(ITask* task);
+
+    bool ChoiceBetting(TaskType betting);
 
     const std::set<Card>& LeftCards() const;
 
@@ -43,9 +48,16 @@ class Game final
     const Player& GetPlayer(std::size_t index) const;
     std::size_t GetPlayerCount() const;
 
+    const GameConfig& GetConfig() const;
+
     std::size_t GetMoney() const;
     void AddMoney(std::size_t money);
     void ResetMoney();
+
+    std::size_t GetPreBetMoney() const;
+    void SetPreBetMoney(std::size_t money);
+
+    void SetPreBetStat(TaskType task);
 
  private:
     void fillCards();
@@ -54,6 +66,9 @@ class Game final
  private:
     GameConfig config_;
     GameStatus status_ = GameStatus::INVALID;
+
+    TaskType preBetStat_ = TaskType::INVALID;
+    std::size_t preBetMoney_ = 0;
 
     Turn turn_;
     std::vector<Player::Ptr> players_;

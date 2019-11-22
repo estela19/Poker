@@ -45,6 +45,19 @@ class Turn
         } while (first != now_);
     }
 
+    template <typename FuncT>
+    void ForEachAll(FuncT&& func)
+    {
+        Node* const first = now_;
+        Node* now = now_;
+
+        do
+        {
+            func(now->player);
+            now = now->next;
+        } while (first != now);
+    }
+
  private:
     Node* now_ = nullptr;
     std::size_t size_ = 0;

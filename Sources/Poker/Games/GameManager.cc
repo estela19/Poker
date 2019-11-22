@@ -16,6 +16,10 @@ void GameManager::ProcessGame(Game& game, GameStatus status)
             game.OpenCard();
             break;
 
+        case GameStatus::PRE_BETTING:
+            game.PreBetting();
+            break;
+
         case GameStatus::BETTING:
             game.Betting();
             break;

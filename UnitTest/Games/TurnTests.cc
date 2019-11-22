@@ -72,3 +72,43 @@ TEST(TurnTests, DeadPlayer)
     std::cerr << turn.Current()->ToString() << std::endl;
     EXPECT_EQ(turn.Current()->GetMoney(), 30000u);
 }
+
+TEST(TurnTests, ForEach)
+{
+    Turn turn;
+
+    Player::Ptr player1 = std::make_unique<RandomPlayer>();
+    Player::Ptr player2 = std::make_unique<RandomPlayer>();
+    Player::Ptr player3 = std::make_unique<RandomPlayer>();
+
+    player2->SetDie(true);
+
+    turn.Insert(player1);
+    turn.Insert(player2);
+    turn.Insert(player3);
+
+    std::size_t counter = 0;
+    turn.ForEach([&counter](Player* player) { ++counter; });
+
+    EXPECT_EQ(counter, 2u);
+}
+
+TEST(TurnTests, ForEachAll)
+{
+    Turn turn;
+
+    Player::Ptr player1 = std::make_unique<RandomPlayer>();
+    Player::Ptr player2 = std::make_unique<RandomPlayer>();
+    Player::Ptr player3 = std::make_unique<RandomPlayer>();
+
+    player2->SetDie(true);
+
+    turn.Insert(player1);
+    turn.Insert(player2);
+    turn.Insert(player3);
+
+    std::size_t counter = 0;
+    turn.ForEachAll([&counter](Player* player) { ++counter; });
+
+    EXPECT_EQ(counter, 3u);
+}
