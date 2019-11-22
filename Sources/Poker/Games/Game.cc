@@ -75,7 +75,7 @@ void Game::PreBetting()
     // 카드 나눠주기
     turn_.ForEach([&](Player* player) {
         auto& nowDeck = player->GetDeck();
-        nowDeck.AddCard(popCard().SetOpen);
+        nowDeck.AddCard(popCard());
         nowDeck.GetCard(nowDeck.Size() - 1).SetOpen(true);
     });
 
