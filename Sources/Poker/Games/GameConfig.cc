@@ -27,7 +27,7 @@ GameConfig LoadConfig(const std::string& filename)
     config.RaiseLimit = j["RaiseLimit"];
     config.TimeLimit = j["TimeLimit"];
 
-	config.AutoPlay = j["AutoPlay"].get<bool>();
+    config.AutoPlay = j["AutoPlay"].get<bool>();
     config.MaxBetMoney = j["MaxBetMoney"].get<std::size_t>();
     config.MinBetMoney = j["MinBetMoney"].get<std::size_t>();
     config.InitMoney = j["InitMoney"].get<std::size_t>();
@@ -43,7 +43,7 @@ void SaveConfig(const std::string& filename, const GameConfig& config)
     j["RaiseLimit"] = config.RaiseLimit;
     j["TimeLimit"] = config.TimeLimit;
 
-	j["AutoPlay"] = config.AutoPlay;
+    j["AutoPlay"] = config.AutoPlay;
     j["MaxBetMoney"] = config.MaxBetMoney;
     j["MinBetMoney"] = config.MinBetMoney;
     j["InitMoney"] = config.InitMoney;

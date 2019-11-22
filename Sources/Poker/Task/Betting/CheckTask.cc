@@ -6,7 +6,7 @@
 
 namespace Poker
 {
-TaskStatus CheckTask::Impl([[maybe_unused]] Player& player)
+TaskStatus CheckTask::Impl(Player& player)
 {
     player.GetGame().SetPreBetStat(TaskType::CHECK);
 

@@ -44,18 +44,18 @@ class Player
     void SetMoney(std::size_t money);
     std::size_t GetMoney() const;
 
-	void SetPreBet(std::size_t money);
+    void SetPreBet(std::size_t money);
     std::size_t GetPreBet() const;
 
     CardDeck& GetDeck();
     const CardDeck& GetDeck() const;
 
     void SetDie(bool die);
-	bool IsDie() const;
+    bool IsDie() const;
 
     virtual std::size_t RequireOpenCard() const = 0;
 
-	virtual ITask::Ptr RequireBetting() const = 0;
+    virtual ITask::Ptr RequireBetting() const = 0;
 
     virtual std::string ToString() const;
 
@@ -66,7 +66,7 @@ class Player
     CardDeck deck_;
     Game* game_;
 
-	bool isDie_ = false;
+    bool isDie_ = false;
 };
 }  // namespace Poker
 

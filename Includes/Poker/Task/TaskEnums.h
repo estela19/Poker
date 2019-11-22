@@ -15,11 +15,11 @@ enum class TaskStatus
 enum class TaskType
 {
     INVALID,
-	BET,	
-    RAISE,	
-    CHECK,	
-    CALL,	
-    FOLD	
+    BET,
+    RAISE,
+    CHECK,
+    CALL,
+    FOLD
 };
 
 enum class CardAction

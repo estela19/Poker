@@ -1,13 +1,13 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-#include <Poker/Task/Betting/FoldTask.h>
 #include <Poker/Players/Player.h>
+#include <Poker/Task/Betting/FoldTask.h>
 
 namespace Poker
 {
-TaskStatus FoldTask::Impl([[maybe_unused]] Player& player)
+TaskStatus FoldTask::Impl(Player& player)
 {
-	// player die
+    // player die
     player.SetDie(true);
 
     // card deck reset

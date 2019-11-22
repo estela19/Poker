@@ -88,13 +88,14 @@ void Game::PreBetting()
                            player));
     });
 
-	 const Player* first = std::max_element(deckRank.begin(), deckRank.end())->second;
+    const Player* first =
+        std::max_element(deckRank.begin(), deckRank.end())->second;
 
-	 // 선 플레이어를 turn의 now로 설정
-	 while (turn_.Current() != first)
-     {
-         turn_.Next();
-	 }
+    // 선 플레이어를 turn의 now로 설정
+    while (turn_.Current() != first)
+    {
+        turn_.Next();
+    }
 
     if (config_.AutoPlay)
     {

@@ -14,7 +14,7 @@ class RandomPlayer : public Player
  public:
     std::size_t RequireOpenCard() const override;
 
-	ITask::Ptr RequireBetting() const override;
+    ITask::Ptr RequireBetting() const override;
 
     std::string ToString() const override;
 };
