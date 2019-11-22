@@ -16,8 +16,9 @@ class ITask
 	using Ptr = std::unique_ptr<ITask>;
 
 public:
-    ITask(TaskType type);
     ITask() = default;
+    ITask(TaskType type);
+    virtual ~ITask() = default;
 
     //! Delete copy constructor
     ITask(const ITask&) = delete;
