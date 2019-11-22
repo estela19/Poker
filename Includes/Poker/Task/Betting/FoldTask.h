@@ -15,8 +15,6 @@ class FoldTask : public ITask
 
  private:
     TaskStatus Impl(Player& player) override;
-
- 
 };
 }  // namespace Poker
 
