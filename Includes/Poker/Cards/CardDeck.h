@@ -10,24 +10,6 @@
 
 namespace Poker
 {
-enum class DeckType
-{
-    INVALID,
-    ROYAL_STRAIGHT_FLUSH,
-    BACK_STRAIGHT_FLUSH,
-    STRAIGHT_FLUSH,
-    FOUR_OF_A_KIND,
-    FULL_HOUSE,
-    FLUSH,
-    MOUNTAIN,
-    BACK_STRAIGHT,
-    STRAIGHT,
-    THREE_OF_A_KIND,
-    TWO_PAIR,
-    ONE_PAIR,
-    TOP
-};
-
 class CardDeck final
 {
  public:

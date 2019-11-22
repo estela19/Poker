@@ -88,7 +88,7 @@ void Game::PreBetting()
                            player));
     });
 
-	 const Player* first = std::min_element(deckRank.begin(), deckRank.end())->second;
+	 const Player* first = std::max_element(deckRank.begin(), deckRank.end())->second;
 
 	 // 선 플레이어를 turn의 now로 설정
 	 while (turn_.Current() != first)
@@ -139,7 +139,7 @@ void Game::EndTurn()
 
         //패의 우선순위가 가장높은(enum의 int형이 가장 작은) 사람의 포인터를
         // winner에 전달
-        winner = std::min_element(deckRank.begin(), deckRank.end())->second;
+        winner = std::max_element(deckRank.begin(), deckRank.end())->second;
     }
 
     // 판돈 승자에게 줌
