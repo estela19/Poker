@@ -40,7 +40,8 @@ class Game final
 
     void Process(ITask* task);
 
-    bool ChoiceBetting(TaskType betting);
+    bool ChoiceBetting(TaskType betting) const;
+    std::vector<TaskType> ValidTasks() const;
 
     const std::set<Card>& LeftCards() const;
 

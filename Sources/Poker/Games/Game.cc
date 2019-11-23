@@ -174,16 +174,16 @@ void Game::Process(ITask* task)
     task->Run();
 }
 
-bool Game::ChoiceBetting(TaskType betting)
+bool Game::ChoiceBetting(TaskType betting) const
 {
     switch (preBetStat_)
     {
         case TaskType::INVALID:
             switch (betting)
             {
-                case Poker::TaskType::BET:
-                case Poker::TaskType::CHECK:
-                case Poker::TaskType::FOLD:
+                case TaskType::BET:
+                case TaskType::CHECK:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -193,9 +193,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::BET:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CALL:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CALL:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -205,9 +205,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::CHECK:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CHECK:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CHECK:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -217,9 +217,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::RAISE:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CALL:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CALL:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -229,6 +229,21 @@ bool Game::ChoiceBetting(TaskType betting)
         default:
             throw std::logic_error("Can't choice Action");
     }
+}
+
+std::vector<TaskType> Game::ValidTasks() const
+{
+    std::vector<TaskType> ret;
+
+    for (int i = 1; i < static_cast<int>(TaskType::COUNT); ++i)
+    {
+        if (ChoiceBetting(static_cast<TaskType>(i)))
+        {
+            ret.emplace_back(static_cast<TaskType>(i));
+        }
+    }
+
+	return ret;
 }
 
 const std::set<Card>& Game::LeftCards() const
