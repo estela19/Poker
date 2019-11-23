@@ -1,6 +1,8 @@
 #ifndef POKER_TASKENUMS_H
 #define POKER_TASKENUMS_H
 
+#include <string>
+
 namespace Poker
 {
 enum class TaskStatus
@@ -19,11 +21,14 @@ enum class TaskType
     RAISE,
     CHECK,
     CALL,
-    FOLD
+    FOLD,
+    COUNT
 };
 
-enum class CardAction
-{
+const std::string TaskTypeStr[] = { "INVALID", "Bet",  "Raise",
+                                    "Check",   "Call", "Fold" };
+
+enum class CardAction {
     TAKE,
     OPEN,
     DROP,

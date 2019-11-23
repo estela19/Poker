@@ -1,5 +1,7 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
+#include <string>
+
 namespace Poker
 {
 enum class CardShape
@@ -10,6 +12,8 @@ enum class CardShape
     SPADE,
     COUNT
 };
+
+const std::string CardShapeStr[] = { "¢À", "¢¾", "¡ß", "¢¼" };
 
 enum class CardNumber
 {
@@ -28,6 +32,9 @@ enum class CardNumber
     ACE,
     COUNT
 };
+
+const std::string CardNumberStr[] = { "2", "3",  "4", "5", "6", "7", "8",
+                                      "9", "10", "J", "Q", "K", "A" };
 
 enum class DeckType
 {
