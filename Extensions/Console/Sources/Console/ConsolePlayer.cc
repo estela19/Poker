@@ -83,7 +83,6 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
     else if (valid[choice] == TaskType::RAISE)
     {
         std::size_t money = 0;
-        const std::size_t minMoney = GetGame().GetConfig().MinBetMoney;
 
         do
         {
