@@ -159,7 +159,25 @@ void Game::EndTurn()
     turn_.ForEach([&](Player* player) {
         player->SetPreBet(0);
         player->GetDeck().Clear();
+
+        if (player->GetMoney() == 0)
+        {
+            turn_.Pop();
+        }
     });
+
+    for (auto it = players_.begin(); it != players_.end();)
+    {
+        if ((*it)->GetMoney() == 0)
+        {
+            (*it).reset();
+            it = players_.erase(it);
+        }
+        else
+        {
+            ++it;
+		}
+    }
 }
 
 void Game::Process(ITask* task)
@@ -243,7 +261,7 @@ std::vector<TaskType> Game::ValidTasks() const
         }
     }
 
-	return ret;
+    return ret;
 }
 
 const std::set<Card>& Game::LeftCards() const
