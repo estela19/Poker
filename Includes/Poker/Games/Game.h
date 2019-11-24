@@ -64,6 +64,8 @@ class Game final
 
     void SetPreBetStat(TaskType task);
 
+	void KillPlayer(Player* player);
+
  private:
     void fillCards();
     Card popCard();
@@ -77,6 +79,7 @@ class Game final
 
     Turn turn_;
     std::vector<Player::Ptr> players_;
+    std::size_t livePlayerCount_ = 0;
     std::set<Card> cards_;
     std::size_t money_ = 0;
 

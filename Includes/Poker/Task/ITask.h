@@ -43,7 +43,7 @@ public:
     virtual TaskStatus Impl(Player& player) = 0;
 
  private:
-    TaskType type_;
+    TaskType type_ = TaskType::INVALID;
     Player* player_ = nullptr;
 };
 }  // namespace Poker

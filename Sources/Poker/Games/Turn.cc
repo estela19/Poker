@@ -37,11 +37,6 @@ std::size_t Turn::GetSize() const
     return size_;
 }
 
-void Turn::SetSize(std::size_t size)
-{
-    size_ = size;
-}
-
 void Turn::Insert(Player::Ptr& player)
 {
     Node* node = new Node;

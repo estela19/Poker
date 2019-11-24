@@ -29,7 +29,7 @@ void Game::BeginTurn()
     fillCards();
 
     // 카드 나눠줘야해 (세장)
-	turn_.ForEach([&](Player* player) {
+    turn_.ForEach([&](Player* player) {
         auto& nowDeck = turn_.Current()->GetDeck();
 
         if (nowDeck.Size() != 0)
@@ -43,6 +43,8 @@ void Game::BeginTurn()
         }
     });
 
+	livePlayerCount_ = players_.size();
+
     if (config_.AutoPlay)
     {
         GameManager::ProcessGame(*this, GameStatus::OPEN_CARDS);
@@ -53,10 +55,9 @@ void Game::OpenCard()
 {
     // 카드 하나를 뒤집어야해
 
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
-        auto& nowDeck = turn_.Current()->GetDeck();
-        std::size_t openCard = turn_.Current()->RequireOpenCard();
+    turn_.ForEach([&](Player* player) {
+        auto& nowDeck = player->GetDeck();
+        std::size_t openCard = player->RequireOpenCard();
 
         if (openCard >= nowDeck.Size())
         {
@@ -64,8 +65,7 @@ void Game::OpenCard()
         }
 
         nowDeck.GetCard(openCard).SetOpen(true);
-        turn_.Next();
-    }
+    });
 
     if (config_.AutoPlay)
     {
@@ -110,12 +110,11 @@ void Game::Betting()
 {
     ITask::Ptr task = turn_.Current()->RequireBetting();
     Process(task.get());
-    turn_.Next();
 
     // card가 maxcard개면 endturn
     auto& nowDeck = turn_.Current()->GetDeck();
     if (config_.AutoPlay &&
-        (nowDeck.Size() == config_.MaxCard || turn_.GetSize() == 1))
+        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1))
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
     }
@@ -130,7 +129,7 @@ void Game::EndTurn()
     Player* winner;
 
     // 모든 플레이어가 fold를 선언해서 한명만 남았을 경우
-    if (turn_.GetSize() == 1)
+    if (livePlayerCount_ == 1)
     {
         winner = turn_.Current();
     }
@@ -155,13 +154,8 @@ void Game::EndTurn()
     winner->SetMoney(GetMoney() + winner->GetMoney());
 
     // player isDie reset
-    turn_.ForEach([&](Player* player) { player->SetDie(false); });
-
-    // preBetMoney reset
-    SetPreBetMoney(0);
-
-    // Reset players
-    turn_.ForEach([&](Player* player) {
+    turn_.ForEachAll([&](Player* player) {
+        player->SetDie(false);
         player->SetPreBet(0);
         player->GetDeck().Clear();
 
@@ -170,6 +164,9 @@ void Game::EndTurn()
             turn_.Pop();
         }
     });
+
+    // preBetMoney reset
+    SetPreBetMoney(0);
 
     for (auto it = players_.begin(); it != players_.end();)
     {
@@ -183,18 +180,6 @@ void Game::EndTurn()
             ++it;
         }
     }
-
-	/*
-    if (config_.AutoPlay && GetPlayerCount() > 1)
-    {
-        GameManager::ProcessGame(*this, GameStatus::BEGIN_TURN);
-    }
-
-    else
-    {
-        std::cout << "End Game" << std::endl;
-	}
-	*/
 }
 
 GameStatus Game::GetStatus() const
@@ -345,6 +330,12 @@ void Game::SetPreBetMoney(std::size_t money)
 void Game::SetPreBetStat(TaskType task)
 {
     preBetStat_ = task;
+}
+
+void Game::KillPlayer(Player* player)
+{
+    --livePlayerCount_;
+    player->SetDie(true);
 }
 
 void Game::fillCards()

@@ -15,7 +15,7 @@ class Turn
     struct Node
     {
         Node* next = nullptr;
-        Player* player;
+        Player* player = nullptr;
     };
 
  public:
@@ -24,7 +24,6 @@ class Turn
     void Next();
     Player* Current();
     std::size_t GetSize() const;
-    void SetSize(std::size_t);
 
     void Insert(Player::Ptr& player);
     void Pop();
