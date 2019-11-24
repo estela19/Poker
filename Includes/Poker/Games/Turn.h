@@ -24,6 +24,7 @@ class Turn
     void Next();
     Player* Current();
     std::size_t GetSize() const;
+    void SetSize(std::size_t);
 
     void Insert(Player::Ptr& player);
     void Pop();

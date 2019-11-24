@@ -53,6 +53,8 @@ class Game final
 
     const GameConfig& GetConfig() const;
 
+	Turn& GetTurn();
+
     std::size_t GetMoney() const;
     void AddMoney(std::size_t money);
     void ResetMoney();

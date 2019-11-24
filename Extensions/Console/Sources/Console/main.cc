@@ -11,8 +11,7 @@ using namespace Poker;
 
 int main(int argc, char** argv)
 {
-    GameConfig config = LoadConfig("./config.json");
-    Game game{ config };
+    Game game{ GameConfig() };
 
     std::size_t playerCount = 0;
 

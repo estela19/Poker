@@ -56,6 +56,19 @@ const CardDeck& Player::GetDeck() const
 void Player::SetDie(bool die)
 {
     isDie_ = die;
+
+    auto& turn = GetGame().GetTurn();
+    if (die == true)
+    {
+        turn.SetSize(turn.GetSize() - 1);   
+	}
+
+	else
+    {
+        turn.SetSize(turn.GetSize() + 1);
+	}
+ 
+    //    GetGame().GetTurn().SetSize(GetGame().GetTurn().GetSize() - 1);
 }
 
 bool Player::IsDie() const

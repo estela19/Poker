@@ -29,8 +29,7 @@ void Game::BeginTurn()
     fillCards();
 
     // 카드 나눠줘야해 (세장)
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
+	turn_.ForEach([&](Player* player) {
         auto& nowDeck = turn_.Current()->GetDeck();
 
         if (nowDeck.Size() != 0)
@@ -42,8 +41,7 @@ void Game::BeginTurn()
         {
             nowDeck.AddCard(popCard());
         }
-        turn_.Next();
-    }
+    });
 
     if (config_.AutoPlay)
     {
@@ -72,7 +70,7 @@ void Game::OpenCard()
     if (config_.AutoPlay)
     {
         GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
-	}
+    }
 }
 
 void Game::PreBetting()
@@ -116,8 +114,8 @@ void Game::Betting()
 
     // card가 maxcard개면 endturn
     auto& nowDeck = turn_.Current()->GetDeck();
-    if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard &&
-        turn_.GetSize() == 1)
+    if (config_.AutoPlay &&
+        (nowDeck.Size() == config_.MaxCard || turn_.GetSize() == 1))
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
     }
@@ -157,10 +155,7 @@ void Game::EndTurn()
     winner->SetMoney(GetMoney() + winner->GetMoney());
 
     // player isDie reset
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
-        turn_.Current()->SetDie(false);
-    }
+    turn_.ForEach([&](Player* player) { player->SetDie(false); });
 
     // preBetMoney reset
     SetPreBetMoney(0);
@@ -188,6 +183,18 @@ void Game::EndTurn()
             ++it;
         }
     }
+
+	/*
+    if (config_.AutoPlay && GetPlayerCount() > 1)
+    {
+        GameManager::ProcessGame(*this, GameStatus::BEGIN_TURN);
+    }
+
+    else
+    {
+        std::cout << "End Game" << std::endl;
+	}
+	*/
 }
 
 GameStatus Game::GetStatus() const
@@ -304,6 +311,12 @@ const GameConfig& Game::GetConfig() const
 {
     return config_;
 }
+
+Turn& Game::GetTurn()
+{
+    return turn_;
+}
+
 std::size_t Game::GetMoney() const
 {
     return money_;
