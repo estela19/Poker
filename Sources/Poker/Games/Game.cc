@@ -68,6 +68,11 @@ void Game::OpenCard()
         nowDeck.GetCard(openCard).SetOpen(true);
         turn_.Next();
     }
+
+    if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
+	}
 }
 
 void Game::PreBetting()
@@ -107,6 +112,7 @@ void Game::Betting()
 {
     ITask::Ptr task = turn_.Current()->RequireBetting();
     Process(task.get());
+    turn_.Next();
 
     // card°¡ maxcard°³¸é endturn
     auto& nowDeck = turn_.Current()->GetDeck();
@@ -114,6 +120,10 @@ void Game::Betting()
         turn_.GetSize() == 1)
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
+    }
+    else if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
     }
 }
 
@@ -176,8 +186,13 @@ void Game::EndTurn()
         else
         {
             ++it;
-		}
+        }
     }
+}
+
+GameStatus Game::GetStatus() const
+{
+    return status_;
 }
 
 void Game::Process(ITask* task)

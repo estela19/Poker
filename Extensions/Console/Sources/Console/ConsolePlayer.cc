@@ -30,7 +30,7 @@ std::size_t ConsolePlayer::RequireOpenCard() const
 
         std::cout << "열 카드의 숫자 입력: ";
         std::cin >> bet;
-    } while (bet < 3);
+    } while (bet >= 3);
 
     return bet;
 }
@@ -53,7 +53,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 
         std::cout << "할 행동의 숫자 입력: ";
         std::cin >> choice;
-    } while (choice < valid.size());
+    } while (!(choice < valid.size()));
 
     if (valid[choice] == TaskType::BET)
     {
@@ -64,7 +64,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
         {
             std::cout << "베팅할 금액 입력: ";
             std::cin >> money;
-        } while (money <= GetMoney() && money >= minMoney);
+        } while (!(money <= GetMoney() && money >= minMoney));
 
         return std::make_unique<BetTask>(money);
     }

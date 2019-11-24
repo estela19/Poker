@@ -38,6 +38,8 @@ class Game final
     void Betting();
     void EndTurn();
 
+	GameStatus GetStatus() const;
+
     void Process(ITask* task);
 
     bool ChoiceBetting(TaskType betting) const;
