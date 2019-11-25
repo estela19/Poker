@@ -13,7 +13,7 @@ enum class CardShape
     COUNT
 };
 
-const std::string CardShapeStr[] = { "♣", "♥", "◆", "♠" };
+const std::string CardShapeStr[] = { "C", "H", "D", "S" };
 
 enum class CardNumber
 {
