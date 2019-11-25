@@ -63,6 +63,16 @@ bool Player::IsDie() const
     return isDie_;
 }
 
+void Player::SetAllin(bool allin)
+{
+    isAllin_ = allin;
+}
+
+bool Player::IsAllin() const
+{
+    return isAllin_;
+}
+
 std::string Player::ToString() const
 {
     std::stringstream ss;

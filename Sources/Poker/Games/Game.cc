@@ -114,7 +114,7 @@ void Game::Betting()
     // card°¡ maxcard°³¸é endturn
     auto& nowDeck = turn_.Current()->GetDeck();
     if (config_.AutoPlay &&
-        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1))
+        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1 || allInPlayerCount_ == livePlayerCount_))
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
     }
@@ -156,6 +156,7 @@ void Game::EndTurn()
     // player isDie reset
     turn_.ForEachAll([&](Player* player) {
         player->SetDie(false);
+        player->SetAllin(false);
         player->SetPreBet(0);
         player->GetDeck().Clear();
 
@@ -167,6 +168,8 @@ void Game::EndTurn()
 
     // preBetMoney reset
     SetPreBetMoney(0);
+
+    allInPlayerCount_ = 0;
 
     for (auto it = players_.begin(); it != players_.end();)
     {
@@ -196,7 +199,10 @@ void Game::Process(ITask* task)
     }
 
     task->SetPlayer(player);
-    task->Run();
+    if (player->IsAllin() == false)
+    {
+        task->Run();
+    }
 }
 
 bool Game::ChoiceBetting(TaskType betting) const
@@ -209,6 +215,7 @@ bool Game::ChoiceBetting(TaskType betting) const
                 case TaskType::BET:
                 case TaskType::CHECK:
                 case TaskType::FOLD:
+                case TaskType::ALLIN:
                     return true;
 
                 default:
@@ -221,6 +228,7 @@ bool Game::ChoiceBetting(TaskType betting) const
                 case TaskType::RAISE:
                 case TaskType::CALL:
                 case TaskType::FOLD:
+                case TaskType::ALLIN:
                     return true;
 
                 default:
@@ -233,6 +241,7 @@ bool Game::ChoiceBetting(TaskType betting) const
                 case TaskType::RAISE:
                 case TaskType::CHECK:
                 case TaskType::FOLD:
+                case TaskType::ALLIN:
                     return true;
 
                 default:
@@ -245,6 +254,20 @@ bool Game::ChoiceBetting(TaskType betting) const
                 case TaskType::RAISE:
                 case TaskType::CALL:
                 case TaskType::FOLD:
+                case TaskType::ALLIN:
+                    return true;
+
+                default:
+                    return false;
+            }
+
+        case TaskType::ALLIN:
+            switch (betting)
+            {
+                case Poker::TaskType::RAISE:
+                case Poker::TaskType::CALL:
+                case Poker::TaskType::FOLD:
+                case Poker::TaskType::ALLIN:
                     return true;
 
                 default:
@@ -336,6 +359,11 @@ void Game::KillPlayer(Player* player)
 {
     --livePlayerCount_;
     player->SetDie(true);
+}
+
+void Game::AddAllInPlayer()
+{
+    allInPlayerCount_++;
 }
 
 void Game::fillCards()

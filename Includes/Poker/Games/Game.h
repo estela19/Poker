@@ -66,6 +66,8 @@ class Game final
 
     void KillPlayer(Player* player);
 
+	void AddAllInPlayer();
+
  private:
     void fillCards();
     Card popCard();
@@ -80,6 +82,7 @@ class Game final
     Turn turn_;
     std::vector<Player::Ptr> players_;
     std::size_t livePlayerCount_ = 0;
+    std::size_t allInPlayerCount_ = 0;
     std::set<Card> cards_;
     std::size_t money_ = 0;
 
