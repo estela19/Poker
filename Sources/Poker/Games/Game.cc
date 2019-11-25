@@ -114,13 +114,34 @@ void Game::Betting()
     // card°¡ maxcard°³¸é endturn
     auto& nowDeck = turn_.Current()->GetDeck();
     if (config_.AutoPlay &&
-        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1 || allInPlayerCount_ == livePlayerCount_))
+        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1))
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
     }
-    else if (config_.AutoPlay)
+    else if (config_.AutoPlay && (allInPlayerCount_ == livePlayerCount_ ||
+                                  callPlayerCount_ == livePlayerCount_ - 1))
     {
         GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
+    }
+    else if (config_.AutoPlay)
+    {
+        turn_.Next();
+        GameManager::ProcessGame(*this, GameStatus::BETTING);
+    }
+}
+
+void Game::Process(ITask* task)
+{
+    Player* player = turn_.Current();
+    if (player->IsDie())
+    {
+        throw std::logic_error("Invalid player id");
+    }
+
+    task->SetPlayer(player);
+    if (player->IsAllin() == false)
+    {
+        task->Run();
     }
 }
 
@@ -188,21 +209,6 @@ void Game::EndTurn()
 GameStatus Game::GetStatus() const
 {
     return status_;
-}
-
-void Game::Process(ITask* task)
-{
-    Player* player = turn_.Current();
-    if (player->IsDie())
-    {
-        throw std::logic_error("Invalid player id");
-    }
-
-    task->SetPlayer(player);
-    if (player->IsAllin() == false)
-    {
-        task->Run();
-    }
 }
 
 bool Game::ChoiceBetting(TaskType betting) const
@@ -359,6 +365,21 @@ void Game::KillPlayer(Player* player)
 {
     --livePlayerCount_;
     player->SetDie(true);
+}
+
+std::size_t Game::GetCallPlayer()
+{
+    return callPlayerCount_;
+}
+
+void Game::AddCallPlayer()
+{
+    callPlayerCount_++;
+}
+
+void Game::ResetCallPlayer()
+{
+    callPlayerCount_ = 0;
 }
 
 void Game::AddAllInPlayer()

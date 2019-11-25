@@ -8,7 +8,13 @@ namespace Poker
 {
 TaskStatus CheckTask::Impl(Player& player)
 {
-    player.GetGame().SetPreBetStat(TaskType::CHECK);
+    auto& game = player.GetGame();
+    if (player.GetGame().GetCallPlayer() != 0)
+    {
+        game.AddCallPlayer();     
+    }
+
+    game.SetPreBetStat(TaskType::CHECK);
 
     return TaskStatus::COMPLETE;
 }

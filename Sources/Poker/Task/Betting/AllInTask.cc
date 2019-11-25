@@ -24,13 +24,14 @@ TaskStatus AllInTask::Impl(Player& player)
 
 	player.SetAllin(true);
     player.GetGame().AddAllInPlayer();
+    player.GetGame().ResetCallPlayer();
 
     player.GetGame().SetPreBetStat(TaskType::ALLIN);
 
     return TaskStatus::COMPLETE;
 }
 
-AllInTask : AllInTask()
+AllInTask::AllInTask()
 {
     // Do nothing
 }

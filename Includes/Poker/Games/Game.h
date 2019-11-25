@@ -68,6 +68,10 @@ class Game final
 
 	void AddAllInPlayer();
 
+	std::size_t GetCallPlayer();
+	void AddCallPlayer();
+    void ResetCallPlayer();
+
  private:
     void fillCards();
     Card popCard();
@@ -83,6 +87,7 @@ class Game final
     std::vector<Player::Ptr> players_;
     std::size_t livePlayerCount_ = 0;
     std::size_t allInPlayerCount_ = 0;
+    std::size_t callPlayerCount_ = 0;
     std::set<Card> cards_;
     std::size_t money_ = 0;
 

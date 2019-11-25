@@ -64,7 +64,7 @@ class Player
 
  private:
     std::size_t money_;
-    std::size_t preBet_;
+    std::size_t preBet_ = 0;
 
     CardDeck deck_;
     Game* game_;

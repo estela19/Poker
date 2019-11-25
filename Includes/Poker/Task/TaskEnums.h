@@ -27,7 +27,7 @@ enum class TaskType
 };
 
 const std::string TaskTypeStr[] = { "INVALID", "Bet",  "Raise",
-                                    "Check",   "Call", "Fold" };
+                                    "Check",   "Call", "Fold", "AllIn" };
 
 enum class CardAction {
     TAKE,
