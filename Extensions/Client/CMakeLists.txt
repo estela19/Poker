@@ -1,5 +1,5 @@
 # Target name
-set(target Console)
+set(target Client)
 
 # Sources
 file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/Sources/*.cc)
@@ -22,6 +22,11 @@ target_compile_options(${target}
 )
 
 target_link_libraries(${target}
+    PUBLIC
+    sfml-graphics
+    sfml-system
+    sfml-window
+
 	PRIVATE
 	${DEFAULT_LINKER_OPTIONS}
 	Poker

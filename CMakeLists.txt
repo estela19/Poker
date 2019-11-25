@@ -26,8 +26,12 @@ cmake_policy(SET CMP0063 NEW)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
+set(SFML_BUILD_AUDIO FALSE)
+add_subdirectory(Libraries/SFML)
+
 # Includes
 include_directories(Includes)
+include_directories(Libraries/SFML/include)
 include_directories(Libraries/random/include)
 include_directories(Libraries/json/include)
 
@@ -35,6 +39,7 @@ include_directories(Libraries/json/include)
 add_subdirectory(Sources/Poker)
 add_subdirectory(UnitTest)
 
+add_subdirectory(Extensions/Client)
 add_subdirectory(Extensions/Console)
 
 # Code coverage
