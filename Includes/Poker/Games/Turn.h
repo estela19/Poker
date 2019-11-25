@@ -15,7 +15,7 @@ class Turn
     struct Node
     {
         Node* next = nullptr;
-        Player* player;
+        Player* player = nullptr;
     };
 
  public:

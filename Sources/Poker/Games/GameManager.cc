@@ -31,7 +31,5 @@ void GameManager::ProcessGame(Game& game, GameStatus status)
         default:
             break;
     }
-
-    game.status_ = status;
 }
 }  // namespace Poker

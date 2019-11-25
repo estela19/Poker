@@ -29,8 +29,7 @@ void Game::BeginTurn()
     fillCards();
 
     // 카드 나눠줘야해 (세장)
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
+    turn_.ForEach([&](Player* player) {
         auto& nowDeck = turn_.Current()->GetDeck();
 
         if (nowDeck.Size() != 0)
@@ -42,8 +41,9 @@ void Game::BeginTurn()
         {
             nowDeck.AddCard(popCard());
         }
-        turn_.Next();
-    }
+    });
+
+    livePlayerCount_ = players_.size();
 
     if (config_.AutoPlay)
     {
@@ -55,10 +55,9 @@ void Game::OpenCard()
 {
     // 카드 하나를 뒤집어야해
 
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
-        auto& nowDeck = turn_.Current()->GetDeck();
-        std::size_t openCard = turn_.Current()->RequireOpenCard();
+    turn_.ForEach([&](Player* player) {
+        auto& nowDeck = player->GetDeck();
+        std::size_t openCard = player->RequireOpenCard();
 
         if (openCard >= nowDeck.Size())
         {
@@ -66,7 +65,11 @@ void Game::OpenCard()
         }
 
         nowDeck.GetCard(openCard).SetOpen(true);
-        turn_.Next();
+    });
+
+    if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
     }
 }
 
@@ -110,10 +113,14 @@ void Game::Betting()
 
     // card가 maxcard개면 endturn
     auto& nowDeck = turn_.Current()->GetDeck();
-    if (config_.AutoPlay && nowDeck.Size() == config_.MaxCard &&
-        turn_.GetSize() == 1)
+    if (config_.AutoPlay &&
+        (nowDeck.Size() == config_.MaxCard || livePlayerCount_ == 1))
     {
         GameManager::ProcessGame(*this, GameStatus::END_TURN);
+    }
+    else if (config_.AutoPlay)
+    {
+        GameManager::ProcessGame(*this, GameStatus::PRE_BETTING);
     }
 }
 
@@ -122,7 +129,7 @@ void Game::EndTurn()
     Player* winner;
 
     // 모든 플레이어가 fold를 선언해서 한명만 남았을 경우
-    if (turn_.GetSize() == 1)
+    if (livePlayerCount_ == 1)
     {
         winner = turn_.Current();
     }
@@ -147,19 +154,37 @@ void Game::EndTurn()
     winner->SetMoney(GetMoney() + winner->GetMoney());
 
     // player isDie reset
-    for (std::size_t i = 0; i < turn_.GetSize(); ++i)
-    {
-        turn_.Current()->SetDie(false);
-    }
+    turn_.ForEachAll([&](Player* player) {
+        player->SetDie(false);
+        player->SetPreBet(0);
+        player->GetDeck().Clear();
+
+        if (player->GetMoney() == 0)
+        {
+            turn_.Pop();
+        }
+    });
 
     // preBetMoney reset
     SetPreBetMoney(0);
 
-    // Reset players
-    turn_.ForEach([&](Player* player) {
-        player->SetPreBet(0);
-        player->GetDeck().Clear();
-    });
+    for (auto it = players_.begin(); it != players_.end();)
+    {
+        if ((*it)->GetMoney() == 0)
+        {
+            (*it).reset();
+            it = players_.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+}
+
+GameStatus Game::GetStatus() const
+{
+    return status_;
 }
 
 void Game::Process(ITask* task)
@@ -174,16 +199,16 @@ void Game::Process(ITask* task)
     task->Run();
 }
 
-bool Game::ChoiceBetting(TaskType betting)
+bool Game::ChoiceBetting(TaskType betting) const
 {
     switch (preBetStat_)
     {
         case TaskType::INVALID:
             switch (betting)
             {
-                case Poker::TaskType::BET:
-                case Poker::TaskType::CHECK:
-                case Poker::TaskType::FOLD:
+                case TaskType::BET:
+                case TaskType::CHECK:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -193,9 +218,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::BET:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CALL:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CALL:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -205,9 +230,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::CHECK:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CHECK:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CHECK:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -217,9 +242,9 @@ bool Game::ChoiceBetting(TaskType betting)
         case TaskType::RAISE:
             switch (betting)
             {
-                case Poker::TaskType::RAISE:
-                case Poker::TaskType::CALL:
-                case Poker::TaskType::FOLD:
+                case TaskType::RAISE:
+                case TaskType::CALL:
+                case TaskType::FOLD:
                     return true;
 
                 default:
@@ -229,6 +254,21 @@ bool Game::ChoiceBetting(TaskType betting)
         default:
             throw std::logic_error("Can't choice Action");
     }
+}
+
+std::vector<TaskType> Game::ValidTasks() const
+{
+    std::vector<TaskType> ret;
+
+    for (int i = 1; i < static_cast<int>(TaskType::COUNT); ++i)
+    {
+        if (ChoiceBetting(static_cast<TaskType>(i)))
+        {
+            ret.emplace_back(static_cast<TaskType>(i));
+        }
+    }
+
+    return ret;
 }
 
 const std::set<Card>& Game::LeftCards() const
@@ -256,6 +296,12 @@ const GameConfig& Game::GetConfig() const
 {
     return config_;
 }
+
+Turn& Game::GetTurn()
+{
+    return turn_;
+}
+
 std::size_t Game::GetMoney() const
 {
     return money_;
@@ -284,6 +330,12 @@ void Game::SetPreBetMoney(std::size_t money)
 void Game::SetPreBetStat(TaskType task)
 {
     preBetStat_ = task;
+}
+
+void Game::KillPlayer(Player* player)
+{
+    --livePlayerCount_;
+    player->SetDie(true);
 }
 
 void Game::fillCards()

@@ -12,8 +12,8 @@
 
 #include <optional>
 #include <set>
-#include <vector>
 #include <utility>
+#include <vector>
 
 namespace Poker
 {
@@ -38,9 +38,12 @@ class Game final
     void Betting();
     void EndTurn();
 
+    GameStatus GetStatus() const;
+
     void Process(ITask* task);
 
-    bool ChoiceBetting(TaskType betting);
+    bool ChoiceBetting(TaskType betting) const;
+    std::vector<TaskType> ValidTasks() const;
 
     const std::set<Card>& LeftCards() const;
 
@@ -50,6 +53,8 @@ class Game final
 
     const GameConfig& GetConfig() const;
 
+    Turn& GetTurn();
+
     std::size_t GetMoney() const;
     void AddMoney(std::size_t money);
     void ResetMoney();
@@ -58,6 +63,8 @@ class Game final
     void SetPreBetMoney(std::size_t money);
 
     void SetPreBetStat(TaskType task);
+
+    void KillPlayer(Player* player);
 
  private:
     void fillCards();
@@ -72,6 +79,7 @@ class Game final
 
     Turn turn_;
     std::vector<Player::Ptr> players_;
+    std::size_t livePlayerCount_ = 0;
     std::set<Card> cards_;
     std::size_t money_ = 0;
 
