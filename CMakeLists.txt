@@ -35,6 +35,8 @@ include_directories(Libraries/json/include)
 add_subdirectory(Sources/Poker)
 add_subdirectory(UnitTest)
 
+add_subdirectory(Extensions/Console)
+
 # Code coverage
 option(BUILD_COVERAGE "Build code coverage" OFF)
 if(CMAKE_BUILD_TYPE MATCHES Debug AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_COVERAGE)

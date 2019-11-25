@@ -3,12 +3,14 @@
 #include <Poker/Players/Player.h>
 #include <Poker/Task/Betting/FoldTask.h>
 
+#include <Poker/Games/Game.h>
+
 namespace Poker
 {
 TaskStatus FoldTask::Impl(Player& player)
 {
     // player die
-    player.SetDie(true);
+    player.GetGame().KillPlayer(&player);
 
     // card deck reset
     player.GetDeck().Clear();
