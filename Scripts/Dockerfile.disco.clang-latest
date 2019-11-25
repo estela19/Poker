@@ -4,6 +4,10 @@ LABEL maintainer "e9857256 <e9857256@naver.com>"
 RUN apt-get update && apt-get install -y \
 	build-essential \
 	cmake \
+	libx11-dev \
+	freeglut3-dev \
+	libudev-dev \
+	libfreetype6-dev \
 	clang-8 \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*

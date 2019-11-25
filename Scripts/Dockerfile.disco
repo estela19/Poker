@@ -3,12 +3,10 @@ LABEL maintainer "e9857256 <e9857256@naver.com>"
 
 RUN apt-get update && apt-get install -y \
 	build-essential \
-	python-dev \
-    python-pip \
-    python3-dev \
-    python3-pip \
-    python3-venv \
-    python3-setuptools \
+	libx11-dev \
+	freeglut3-dev \
+	libudev-dev \
+	libfreetype6-dev \
 	cmake \
 	--no-install-recommends \
 	&& rm -rf /var/lib/apt/lists/*

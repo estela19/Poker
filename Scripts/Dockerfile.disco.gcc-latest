@@ -3,6 +3,10 @@ LABEL maintainer "e9857256 <e9857256@naver.com>"
 
 RUN apt-get update && apt-get install -y \
 	build-essential \
+	libx11-dev \
+	freeglut3-dev \
+	libudev-dev \
+	libfreetype6-dev \
 	cmake \
 	gcc-8 \
 	g++-8 \

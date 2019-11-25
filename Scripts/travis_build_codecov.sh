@@ -15,6 +15,10 @@ sudo apt-get install -yq \
     ggcov \
     lcov \
     curl \
+	libx11-dev \
+	freeglut3-dev \
+	libudev-dev \
+	libfreetype6-dev \
 
 mkdir build
 cd build
