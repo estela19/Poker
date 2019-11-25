@@ -100,6 +100,7 @@ std::string ConsolePlayer::ToString() const
 {
     std::stringstream ss;
     ss << "[플레이어 " << playerId_ << "]" << std::endl;
+    ss << "잔고: " << GetMoney() << std::endl << std::endl;
 
     ss << PlayerCardListToString();
 
