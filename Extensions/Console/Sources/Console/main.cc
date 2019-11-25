@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     do
     {
-        std::cout << "ÇÃ·¹ÀÌ¾îÀÇ ¼ö¸¦ ÀÔ·Â: ";
+        std::cout << "í”Œë ˆì´ì–´ì˜ ìˆ˜ë¥¼ ìž…ë ¥: ";
         std::cin >> playerCount;
     } while (playerCount < 1);
 

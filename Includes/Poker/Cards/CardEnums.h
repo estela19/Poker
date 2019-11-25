@@ -1,4 +1,4 @@
-// Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
+ï»¿// Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
 #include <string>
 
@@ -13,7 +13,7 @@ enum class CardShape
     COUNT
 };
 
-const std::string CardShapeStr[] = { "¢À", "¢¾", "¡ß", "¢¼" };
+const std::string CardShapeStr[] = { "â™£", "â™¥", "â—†", "â™ " };
 
 enum class CardNumber
 {

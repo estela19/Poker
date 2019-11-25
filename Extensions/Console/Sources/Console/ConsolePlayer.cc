@@ -25,10 +25,10 @@ std::size_t ConsolePlayer::RequireOpenCard() const
 
     do
     {
-        std::cout << "[Ä«µå ¸ñ·Ï]" << std::endl;
+        std::cout << "[ì¹´ë“œ ëª©ë¡]" << std::endl;
         PrintCardList();
 
-        std::cout << "¿­ Ä«µåÀÇ ¼ýÀÚ ÀÔ·Â: ";
+        std::cout << "ì—´ ì¹´ë“œì˜ ìˆ«ìž ìž…ë ¥: ";
         std::cin >> bet;
     } while (bet >= 3);
 
@@ -42,7 +42,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 
     do
     {
-        std::cout << "[Çàµ¿ ¸ñ·Ï]" << std::endl;
+        std::cout << "[í–‰ë™ ëª©ë¡]" << std::endl;
 
         for (std::size_t choiceIdx = 0; choiceIdx < valid.size(); ++choiceIdx)
         {
@@ -51,7 +51,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
                       << std::endl;
         }
 
-        std::cout << "ÇÒ Çàµ¿ÀÇ ¼ýÀÚ ÀÔ·Â: ";
+        std::cout << "í•  í–‰ë™ì˜ ìˆ«ìž ìž…ë ¥: ";
         std::cin >> choice;
     } while (!(choice < valid.size()));
 
@@ -62,7 +62,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 
         do
         {
-            std::cout << "º£ÆÃÇÒ ±Ý¾× ÀÔ·Â: ";
+            std::cout << "ë² íŒ…í•  ê¸ˆì•¡ ìž…ë ¥: ";
             std::cin >> money;
         } while (!(money <= GetMoney() && money >= minMoney));
 
@@ -86,7 +86,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 
         do
         {
-            std::cout << "·¹ÀÌÁîÇÒ ±Ý¾× ÀÔ·Â: ";
+            std::cout << "ë ˆì´ì¦ˆí•  ê¸ˆì•¡ ìž…ë ¥: ";
             std::cin >> money;
         } while (money <= GetMoney() && money >= GetGame().GetPreBetMoney());
 
@@ -99,12 +99,12 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 std::string ConsolePlayer::ToString() const
 {
     std::stringstream ss;
-    ss << "[ÇÃ·¹ÀÌ¾î " << playerId_ << "]" << std::endl;
-    ss << "ÀÜ°í: " << GetMoney() << std::endl << std::endl;
+    ss << "[í”Œë ˆì´ì–´ " << playerId_ << "]" << std::endl;
+    ss << "ìž”ê³ : " << GetMoney() << std::endl << std::endl;
 
     ss << PlayerCardListToString();
 
-	return ss.str();
+    return ss.str();
 }
 
 std::string ConsolePlayer::PlayerCardListToString() const
@@ -117,11 +117,11 @@ std::string ConsolePlayer::PlayerCardListToString() const
 
         auto& card = GetDeck().GetCard(cardIdx);
         ss << CardShapeStr[static_cast<std::size_t>(card.Shape())]
-                  << CardNumberStr[static_cast<std::size_t>(card.Number())]
-                  << std::endl;
+           << CardNumberStr[static_cast<std::size_t>(card.Number())]
+           << std::endl;
     }
 
-	return ss.str();
+    return ss.str();
 }
 
 void ConsolePlayer::PrintCardList() const
