@@ -7,3 +7,6 @@
 [submodule "Libraries/json"]
 	path = Libraries/json
 	url = https://github.com/nlohmann/json
+[submodule "Libraries/SFML"]
+	path = Libraries/SFML
+	url = https://github.com/SFML/SFML
