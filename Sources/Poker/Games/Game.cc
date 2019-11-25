@@ -43,7 +43,7 @@ void Game::BeginTurn()
         }
     });
 
-	livePlayerCount_ = players_.size();
+    livePlayerCount_ = players_.size();
 
     if (config_.AutoPlay)
     {
