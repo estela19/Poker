@@ -23,8 +23,8 @@ TaskStatus AllInTask::Impl(Player& player)
     player.SetPreBet(player.GetPreBet() + player.GetMoney());
 
 	player.SetAllin(true);
-    player.GetGame().AddAllInPlayer();
     player.GetGame().ResetCallPlayer();
+    player.GetGame().AddAllInPlayer();
 
     player.GetGame().SetPreBetStat(TaskType::ALLIN);
 

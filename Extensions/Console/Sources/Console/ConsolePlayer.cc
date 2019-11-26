@@ -108,7 +108,8 @@ void ConsolePlayer::OnBettingDone() const
 {
     std::cout << ToString();
     std::cout << "Game Total money: " << GetGame().GetMoney() << std::endl;
-	PrintCardList();
+//	PrintCardList();
+    std::cout << std::endl;
 }
 
 std::string ConsolePlayer::ToString() const
