@@ -110,6 +110,7 @@ void Game::Betting()
 {
     ITask::Ptr task = turn_.Current()->RequireBetting();
     Process(task.get());
+    turn_.Current()->OnBettingDone();
 
     // card°¡ maxcard°³¸é endturn
     auto& nowDeck = turn_.Current()->GetDeck();

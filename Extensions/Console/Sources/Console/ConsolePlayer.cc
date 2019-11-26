@@ -3,12 +3,12 @@
 #include <Console/ConsolePlayer.h>
 
 #include <Poker/Games/Game.h>
+#include <Poker/Task/Betting/AllInTask.h>
 #include <Poker/Task/Betting/BetTask.h>
 #include <Poker/Task/Betting/CallTask.h>
 #include <Poker/Task/Betting/CheckTask.h>
 #include <Poker/Task/Betting/FoldTask.h>
 #include <Poker/Task/Betting/RaiseTask.h>
-#include <Poker/Task/Betting/AllInTask.h>
 
 #include <iostream>
 #include <sstream>
@@ -43,6 +43,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
 
     do
     {
+        std::cout << "Turn : Player " << playerId_ << std::endl;
         std::cout << "[Action List]" << std::endl;
 
         for (std::size_t choiceIdx = 0; choiceIdx < valid.size(); ++choiceIdx)
@@ -84,7 +85,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
     else if (valid[choice] == TaskType::ALLIN)
     {
         return std::make_unique<AllInTask>();
-	}
+    }
     else if (valid[choice] == TaskType::RAISE)
     {
         std::size_t money = 0;
@@ -93,12 +94,21 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
         {
             std::cout << "Input money to raise: ";
             std::cin >> money;
-        } while (money <= GetMoney() && money >= GetGame().GetPreBetMoney());
+        } while (!(money <= GetMoney() && money >= GetGame().GetPreBetMoney()));
 
         return std::make_unique<RaiseTask>(money);
     }
 
+    std::cout << "Success" << std::endl;
+
     return nullptr;
+}
+
+void ConsolePlayer::OnBettingDone() const
+{
+    std::cout << ToString();
+    std::cout << "Game Total money: " << GetGame().GetMoney() << std::endl;
+	PrintCardList();
 }
 
 std::string ConsolePlayer::ToString() const

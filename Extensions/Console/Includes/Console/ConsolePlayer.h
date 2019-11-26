@@ -12,6 +12,7 @@ class ConsolePlayer : public Poker::Player
 
     std::size_t RequireOpenCard() const override;
     Poker::ITask::Ptr RequireBetting() const override;
+    void OnBettingDone() const override;
 
 	std::string ToString() const override;
 

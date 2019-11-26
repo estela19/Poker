@@ -62,6 +62,8 @@ class Player
 
     virtual std::string ToString() const;
 
+	virtual void OnBettingDone() const {}
+
  private:
     std::size_t money_;
     std::size_t preBet_ = 0;
