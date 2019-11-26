@@ -75,7 +75,18 @@ void Game::OpenCard()
 
 void Game::PreBetting()
 {
-    callPlayerCount_ = allInPlayerCount_;
+    if (preBetStat_ != TaskType::INVALID)
+    {
+        callPlayerCount_ = allInPlayerCount_;
+	}
+    else
+    {	
+		ResetCallPlayer();
+    }
+
+    turn_.Current()->SuccessFlag();
+    maxRaisedMoney_ = 0;
+    preBetStat_ = TaskType::INVALID;
 
     // preBetMoney reset
     SetPreBetMoney(0);
@@ -216,6 +227,8 @@ void Game::EndTurn()
             ++it;
         }
     }
+
+    turn_.Current()->SuccessFlag();
 }
 
 GameStatus Game::GetStatus() const
@@ -379,7 +392,7 @@ void Game::KillPlayer(Player* player)
     player->SetDie(true);
 }
 
-std::size_t Game::GetCallPlayer()
+std::size_t Game::GetCallPlayer() const
 {
     return callPlayerCount_;
 }
@@ -397,6 +410,16 @@ void Game::ResetCallPlayer()
 void Game::AddAllInPlayer()
 {
     allInPlayerCount_++;
+}
+
+std::size_t Game::GetMaxRaisedMoney() const
+{
+    return maxRaisedMoney_;
+}
+
+void Game::SetMaxRaisedMoney(std::size_t money)
+{
+    maxRaisedMoney_ = money;
 }
 
 void Game::fillCards()

@@ -68,9 +68,12 @@ class Game final
 
 	void AddAllInPlayer();
 
-	std::size_t GetCallPlayer();
+	std::size_t GetCallPlayer() const;
 	void AddCallPlayer();
     void ResetCallPlayer();
+
+	std::size_t GetMaxRaisedMoney() const;
+    void SetMaxRaisedMoney(std::size_t money);
 
  private:
     void fillCards();
@@ -85,6 +88,7 @@ class Game final
 
     Turn turn_;
     std::vector<Player::Ptr> players_;
+    std::size_t maxRaisedMoney_ = 0;
     std::size_t livePlayerCount_ = 0;
     std::size_t allInPlayerCount_ = 0;
     std::size_t callPlayerCount_ = 0;

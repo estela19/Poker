@@ -94,7 +94,7 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
         {
             std::cout << "Input money to raise: ";
             std::cin >> money;
-        } while (!(money <= GetMoney() && money >= GetGame().GetPreBetMoney()));
+        } while (!(money <= GetMoney() && money > GetGame().GetMaxRaisedMoney()));
 
         return std::make_unique<RaiseTask>(money);
     }
@@ -108,8 +108,12 @@ void ConsolePlayer::OnBettingDone() const
 {
     std::cout << ToString();
     std::cout << "Game Total money: " << GetGame().GetMoney() << std::endl;
-//	PrintCardList();
     std::cout << std::endl;
+}
+
+void ConsolePlayer::SuccessFlag() const
+{
+    std::cout << std::endl << "Ended" << std::endl << std::endl;
 }
 
 std::string ConsolePlayer::ToString() const

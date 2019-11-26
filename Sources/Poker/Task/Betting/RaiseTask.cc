@@ -35,6 +35,7 @@ TaskStatus RaiseTask::Impl(Player& player)
 
     player.GetGame().SetPreBetMoney(player.GetGame().GetPreBetMoney() + money_);
     player.SetPreBet(player.GetPreBet() + bet);
+    player.GetGame().SetMaxRaisedMoney(money_);
 
 	player.GetGame().ResetCallPlayer();
 
