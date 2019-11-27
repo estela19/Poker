@@ -33,6 +33,7 @@ include_directories(Includes)
 include_directories(Libraries/random/include)
 include_directories(Libraries/json/include)
 include_directories(Libraries/asio/asio/include)
+include_directories(Libraries/spdlog/include)
 
 # Project modules
 add_subdirectory(Sources/Poker)
