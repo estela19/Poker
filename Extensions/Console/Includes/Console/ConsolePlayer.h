@@ -15,7 +15,7 @@ class ConsolePlayer : public Poker::Player
     void OnBettingDone() const override;
     void SuccessFlag() const override;
 
-	std::string ToString() const override;
+    std::string ToString() const override;
 
 	std::string PlayerCardListToString() const;
     void PrintCardList() const;

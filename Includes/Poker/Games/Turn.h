@@ -52,7 +52,6 @@ class Turn
         Node* now = now_;
 
         do
-
 		{
             func(now->player);
             now = now->next;

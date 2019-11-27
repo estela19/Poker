@@ -22,7 +22,7 @@ enum class TaskType
     CHECK,
     CALL,
     FOLD,
-	ALLIN,
+    ALLIN,
     COUNT
 };
 

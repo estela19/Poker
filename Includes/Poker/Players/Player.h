@@ -71,7 +71,7 @@ class Player
     }
 
  private:
-    std::size_t money_;
+    std::size_t money_ = 0;
     std::size_t preBet_ = 0;
 
     CardDeck deck_;

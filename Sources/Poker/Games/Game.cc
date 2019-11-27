@@ -81,7 +81,7 @@ void Game::PreBetting()
 	}
     else
     {	
-		ResetCallPlayer();
+        ResetCallPlayer();
     }
 
     turn_.Current()->SuccessFlag();

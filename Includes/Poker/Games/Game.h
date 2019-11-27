@@ -66,7 +66,7 @@ class Game final
 
     void KillPlayer(Player* player);
 
-	void AddAllInPlayer();
+    void AddAllInPlayer();
 
 	std::size_t GetCallPlayer() const;
 	void AddCallPlayer();

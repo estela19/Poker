@@ -10,11 +10,11 @@ namespace Poker
 {
 class AllInTask : public ITask
 {
- public:
+public:
     AllInTask();
 
 private:
     TaskStatus Impl(Player& player) override;
 };
 }  // namespace Poker
-#endif  // !POKER_ALLIN_TASK_H
+#endif  // POKER_ALLIN_TASK_H
