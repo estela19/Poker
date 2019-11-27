@@ -10,10 +10,10 @@ namespace Poker
 {
 class AllInTask : public ITask
 {
-public:
+ public:
     AllInTask();
 
-private:
+ private:
     TaskStatus Impl(Player& player) override;
 };
 }  // namespace Poker

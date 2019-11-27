@@ -68,11 +68,11 @@ class Game final
 
     void AddAllInPlayer();
 
-	std::size_t GetCallPlayer() const;
-	void AddCallPlayer();
+    std::size_t GetCallPlayer() const;
+    void AddCallPlayer();
     void ResetCallPlayer();
 
-	std::size_t GetMaxRaisedMoney() const;
+    std::size_t GetMaxRaisedMoney() const;
     void SetMaxRaisedMoney(std::size_t money);
 
  private:

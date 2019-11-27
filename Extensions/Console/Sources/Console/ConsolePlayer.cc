@@ -94,7 +94,8 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
         {
             std::cout << "Input money to raise: ";
             std::cin >> money;
-        } while (!(money <= GetMoney() && money > GetGame().GetMaxRaisedMoney()));
+        } while (
+            !(money <= GetMoney() && money > GetGame().GetMaxRaisedMoney()));
 
         return std::make_unique<RaiseTask>(money);
     }

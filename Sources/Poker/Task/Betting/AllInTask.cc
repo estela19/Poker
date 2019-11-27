@@ -11,7 +11,8 @@ namespace Poker
 TaskStatus AllInTask::Impl(Player& player)
 {
     // 최소배팅금액, 내 잔고, 최대배팅금액 확인
-    if (player.GetMoney() < player.GetGame().GetPreBetMoney() - player.GetPreBet())
+    if (player.GetMoney() <
+        player.GetGame().GetPreBetMoney() - player.GetPreBet())
     {
         throw std::logic_error("Not enough money");
     }

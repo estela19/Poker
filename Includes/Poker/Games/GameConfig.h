@@ -3,8 +3,8 @@
 #ifndef POKER_GAME_CONFIG_H
 #define POKER_GAME_CONFIG_H
 
-#include <string>
 #include <numeric>
+#include <string>
 
 namespace Poker
 {
