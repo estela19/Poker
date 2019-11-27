@@ -7,14 +7,16 @@ project(Poker)
 # C++ standard
 set(CMAKE_CXX_STANDARD 17)
 
-# Compile options
-include(CMake/CompileOptions.cmake)
-
 # Set output directories
 set(DEFAULT_CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Compile options
+include(CMake/CompileOptions.cmake)
 
 # External libraries
 set(BUILD_GTEST ON CACHE BOOL "" FORCE)
@@ -30,12 +32,14 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 include_directories(Includes)
 include_directories(Libraries/random/include)
 include_directories(Libraries/json/include)
+include_directories(Libraries/asio/asio/include)
 
 # Project modules
 add_subdirectory(Sources/Poker)
 add_subdirectory(UnitTest)
 
 add_subdirectory(Extensions/Console)
+add_subdirectory(Extensions/Server)
 
 # Code coverage
 option(BUILD_COVERAGE "Build code coverage" OFF)
