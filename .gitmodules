@@ -10,3 +10,6 @@
 [submodule "Libraries/asio"]
 	path = Libraries/asio
 	url = https://github.com/chriskohlhoff/asio
+[submodule "Libraries/spdlog"]
+	path = Libraries/spdlog
+	url = https://github.com/gabime/spdlog
