@@ -7,3 +7,6 @@
 [submodule "Libraries/json"]
 	path = Libraries/json
 	url = https://github.com/nlohmann/json
+[submodule "Libraries/asio"]
+	path = Libraries/asio
+	url = https://github.com/chriskohlhoff/asio
