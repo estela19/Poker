@@ -78,9 +78,9 @@ void Game::PreBetting()
     if (preBetStat_ != TaskType::INVALID)
     {
         callPlayerCount_ = allInPlayerCount_;
-	}
+    }
     else
-    {	
+    {
         ResetCallPlayer();
     }
 
