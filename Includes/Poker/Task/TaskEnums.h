@@ -22,13 +22,15 @@ enum class TaskType
     CHECK,
     CALL,
     FOLD,
+    ALLIN,
     COUNT
 };
 
-const std::string TaskTypeStr[] = { "INVALID", "Bet",  "Raise",
-                                    "Check",   "Call", "Fold" };
+const std::string TaskTypeStr[] = { "INVALID", "Bet",  "Raise", "Check",
+                                    "Call",    "Fold", "AllIn" };
 
-enum class CardAction {
+enum class CardAction
+{
     TAKE,
     OPEN,
     DROP,
