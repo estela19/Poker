@@ -33,6 +33,7 @@ TaskStatus BetTask::Impl(Player& player)
 
     player.GetGame().SetPreBetMoney(player.GetGame().GetPreBetMoney() + money_);
     player.SetPreBet(player.GetPreBet() + money_);
+    player.GetGame().SetMaxRaisedMoney(money_);
 
     player.GetGame().SetPreBetStat(TaskType::BET);
 

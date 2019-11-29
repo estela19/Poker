@@ -25,7 +25,7 @@ TaskStatus CallTask::Impl(Player& player)
 
     player.SetPreBet(player.GetPreBet() + bet);
 
-    player.GetGame().SetPreBetStat(TaskType::CALL);
+    player.GetGame().AddCallPlayer();
 
     return TaskStatus::COMPLETE;
 }

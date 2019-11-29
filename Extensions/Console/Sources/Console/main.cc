@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 
     do
     {
-        std::cout << "플레이어의 수를 입력: ";
+        std::cout << "Input number of all players: ";
         std::cin >> playerCount;
     } while (playerCount < 1);
 

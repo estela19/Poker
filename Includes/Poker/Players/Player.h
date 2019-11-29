@@ -53,20 +53,32 @@ class Player
     void SetDie(bool die);
     bool IsDie() const;
 
+    void SetAllin(bool allin);
+    bool IsAllin() const;
+
     virtual std::size_t RequireOpenCard() const = 0;
 
     virtual ITask::Ptr RequireBetting() const = 0;
 
     virtual std::string ToString() const;
 
+    virtual void OnBettingDone() const
+    {
+    }
+
+    virtual void SuccessFlag() const
+    {
+    }
+
  private:
-    std::size_t money_;
-    std::size_t preBet_;
+    std::size_t money_ = 0;
+    std::size_t preBet_ = 0;
 
     CardDeck deck_;
     Game* game_;
 
     bool isDie_ = false;
+    bool isAllin_ = false;
 };
 }  // namespace Poker
 
