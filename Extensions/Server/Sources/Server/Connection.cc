@@ -40,6 +40,11 @@ void Connection::SetResetCallback(std::function<void()> callback)
     resetCallback_ = std::move(callback);
 }
 
+std::future<std::string> Connection::GetFuture()
+{
+    return recvPromise_.get_future();
+}
+
 int Connection::ConnectionID() const
 {
     return id_;
@@ -83,7 +88,8 @@ void Connection::readComplete(const asio::error_code& error, std::size_t size)
     }
     else
     {
-        std::string sv(buffer_, size);
+        std::string s(buffer_, size);
+        recvPromise_.set_value(s);
 
         read();
     }

@@ -21,6 +21,7 @@ class Connection final
     void Stop();
 
     void SetResetCallback(std::function<void()> callback);
+    std::future<std::string> GetFuture();
 
     int ConnectionID() const;
     asio::ip::tcp::socket& Socket();
@@ -46,6 +47,7 @@ class Connection final
     std::size_t bufSize_;
 
     std::function<void()> resetCallback_ = nullptr;
+    std::promise<std::string> recvPromise_;
 
 	friend class ConnectionPlayer;
 };
