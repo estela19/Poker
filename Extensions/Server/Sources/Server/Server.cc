@@ -67,7 +67,9 @@ void Server::readComplete(const asio::error_code& error, std::size_t size)
     }
     else
     {
-        // TODO: Process client's request
+        std::string_view sv(buffer_, size);
+
+		spdlog::info(sv);
 
         read();
     }
