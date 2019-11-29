@@ -26,6 +26,7 @@ class GameManager final
     GameManager& operator=(GameManager&&) = delete;
 
     void JoinGame(Connection& sess);
+    void RemovePlayerFromGame(Poker::Player* player);
 
     bool HasEmptyGame();
 

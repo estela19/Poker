@@ -30,6 +30,11 @@ void Connection::Start(int ID)
     read();
 }
 
+void Connection::Stop()
+{
+    reset();
+}
+
 void Connection::SetResetCallback(std::function<void()> callback)
 {
     resetCallback_ = std::move(callback);
@@ -65,6 +70,8 @@ void Connection::readComplete(const asio::error_code& error, std::size_t size)
         if (error == asio::error::eof)
         {
             spdlog::info("[Connection {}] Client disconnected.", id_);
+
+            GameManager::Get().RemovePlayerFromGame(player_);
         }
         else
         {
@@ -76,9 +83,7 @@ void Connection::readComplete(const asio::error_code& error, std::size_t size)
     }
     else
     {
-        std::string_view sv(buffer_, size);
-
-        spdlog::info(sv);
+        std::string sv(buffer_, size);
 
         read();
     }
@@ -101,6 +106,7 @@ void Connection::reset()
     {
         socket_.close();
 
-        resetCallback_();
+        if (resetCallback_)
+            resetCallback_();
     }
 }

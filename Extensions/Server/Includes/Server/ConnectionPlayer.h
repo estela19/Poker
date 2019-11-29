@@ -14,8 +14,7 @@ class ConnectionPlayer final : public Poker::Player
     std::size_t RequireOpenCard() const override;
     Poker::ITask::Ptr RequireBetting() const override;
 
- private:
-    Connection& conn_;
+    Connection& conn;
 };
 
 #endif  // SERVER_SESSION_PLAYER_H

@@ -4,22 +4,20 @@
 
 using namespace Poker;
 
-ConnectionPlayer::ConnectionPlayer(Connection& conn)
-    : conn_(conn)
+ConnectionPlayer::ConnectionPlayer(Connection& _conn)
+    : conn(_conn)
 {
-	// Do nothing
+    _conn.player_ = this;
 }
 
 std::size_t ConnectionPlayer::RequireOpenCard() const
 {
-    conn_.Write("Require Open Card\n");
 
 	return 0;
 }
 
 ITask::Ptr ConnectionPlayer::RequireBetting() const
 {
-    conn_.Write("Require Betting\n");
 
 	return nullptr;
 }

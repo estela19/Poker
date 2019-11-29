@@ -3,11 +3,13 @@
 #ifndef SERVER_CONNECTION_H
 #define SERVER_CONNECTION_H
 
+#include <Poker/Players/Player.h>
+
 #include <asio.hpp>
 
 #include <functional>
 #include <future>
-#include <string_view>
+#include <string>
 
 class Connection final
 {
@@ -16,6 +18,8 @@ class Connection final
     ~Connection();
 
     void Start(int ID);
+    void Stop();
+
     void SetResetCallback(std::function<void()> callback);
 
     int ConnectionID() const;
@@ -33,13 +37,17 @@ class Connection final
     void read();
 
  private:
+    Poker::Player* player_ = nullptr;
+
     int id_ = -1;
     asio::ip::tcp::socket socket_;
 
     char* buffer_;
     std::size_t bufSize_;
 
-    std::function<void()> resetCallback_;
+    std::function<void()> resetCallback_ = nullptr;
+
+	friend class ConnectionPlayer;
 };
 
 #endif  // SERVER_CONNECTION_H
