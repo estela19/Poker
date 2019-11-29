@@ -6,14 +6,18 @@ using asio::ip::tcp;
 
 Server::Server(asio::io_context& ioContext, short port)
     : ioContext_(ioContext),
-      acceptor_(ioContext, tcp::endpoint(tcp::v4(), port))
+      acceptor_(ioContext, tcp::endpoint(tcp::v4(), port)),
+      connectCount_(0)
 {
     start();
 }
 
 void Server::start()
 {
-    auto connection = std::make_shared<Connection>(ioContext_);
+    Connection* connection;
+
+    connection =
+        new Connection(ioContext_, [connection]() { delete connection; });
 
     acceptor_.async_accept(connection->Socket(),
                            [=](const asio::error_code& error) {
@@ -22,7 +26,7 @@ void Server::start()
 }
 
 void Server::acceptComplete(const asio::error_code& error,
-                            Connection::Ptr conn)
+                            Connection* conn)
 {
     if (!error)
     {

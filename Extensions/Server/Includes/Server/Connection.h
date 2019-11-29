@@ -5,16 +5,13 @@
 
 #include <asio.hpp>
 
-#include <memory>
+#include <functional>
 #include <string_view>
 
 class Connection final
 {
  public:
-    using Ptr = std::shared_ptr<Connection>;
-
- public:
-    Connection(asio::io_context& ioContext, std::size_t bufSize = 8096);
+    Connection(asio::io_context& ioContext, std::function<void()> resetCallback, std::size_t bufSize = 8096);
     ~Connection();
 
 	void Start(int ID);
@@ -22,12 +19,12 @@ class Connection final
     int ConnectionID() const;
     asio::ip::tcp::socket& Socket();
 
-    void Write(const std::string_view& data);
+    void Write(const std::string& data);
 
  private:
     void readComplete(const asio::error_code& error, std::size_t size);
 
-    void write(const std::string_view& data, std::size_t size);
+    void write(const std::string& data);
     void writeComplete(const asio::error_code& error, std::size_t size);
 
     void reset();
@@ -39,6 +36,8 @@ class Connection final
 
     char* buffer_;
     std::size_t bufSize_;
+
+	std::function<void()> resetCallback_;
 };
 
 #endif  // SERVER_CONNECTION_H

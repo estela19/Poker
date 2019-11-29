@@ -8,8 +8,12 @@
 
 using asio::ip::tcp;
 
-Connection::Connection(asio::io_context& ioContext, std::size_t bufSize)
-    : socket_(ioContext), buffer_(new char[bufSize]), bufSize_(bufSize)
+Connection::Connection(asio::io_context& ioContext,
+                       std::function<void()> resetCallback, std::size_t bufSize)
+    : socket_(ioContext),
+      buffer_(new char[bufSize]),
+      bufSize_(bufSize),
+      resetCallback_(std::move(resetCallback))
 {
     // Do nothing
 }
@@ -18,7 +22,7 @@ Connection::~Connection()
 {
     if (buffer_)
     {
-        delete buffer_;
+        delete[] buffer_;
     }
 }
 
@@ -39,9 +43,9 @@ tcp::socket& Connection::Socket()
     return socket_;
 }
 
-void Connection::Write(const std::string_view& data)
+void Connection::Write(const std::string& data)
 {
-    write(data, data.size());
+    write(data);
 }
 
 void Connection::read()
@@ -78,11 +82,10 @@ void Connection::readComplete(const asio::error_code& error, std::size_t size)
     }
 }
 
-void Connection::write(const asio::string_view& data, std::size_t size)
+void Connection::write(const std::string& data)
 {
-    asio::async_write(socket_, asio::buffer(data, bufSize_),
-                      [this](asio::error_code error, std::size_t size) {
-                          writeComplete(error, size);
+    asio::async_write(socket_, asio::buffer(data),
+                      [](asio::error_code error, std::size_t size) {
                       });
 }
 
@@ -96,5 +99,7 @@ void Connection::reset()
     if (socket_.is_open())
     {
         socket_.close();
+
+		resetCallback_();
     }
 }

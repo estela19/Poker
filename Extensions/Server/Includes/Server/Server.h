@@ -5,8 +5,9 @@
 
 #include <Server/Connection.h>
 
-#include <atomic>
 #include <asio.hpp>
+#include <mutex>
+#include <vector>
 
 class Server final
 {
@@ -16,12 +17,12 @@ class Server final
 
  private:
 	void start();
-    void acceptComplete(const asio::error_code& error, Connection::Ptr conn);
+    void acceptComplete(const asio::error_code& error, Connection* conn);
 
  private:
     asio::io_context& ioContext_;
     asio::ip::tcp::acceptor acceptor_;
-    std::atomic<int> connectCount_ = 0;
+    std::atomic<int> connectCount_;
 };
 
 #endif  // SERVER_SERVER_H
