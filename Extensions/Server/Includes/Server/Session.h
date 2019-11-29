@@ -7,13 +7,15 @@
 
 #include <string_view>
 
-class Server final
+class Session final
 {
  public:
-    Server(asio::io_context& ioContext, short port, std::size_t bufSize = 8096);
-    ~Server();
+    Session(asio::io_context& ioContext, short port, std::size_t bufSize = 8096);
+    ~Session();
 
     void Start();
+
+	void Write(const std::string_view& data);
 
  private:
     void readComplete(const asio::error_code& error, std::size_t size);
