@@ -25,7 +25,7 @@ class Game final
     template <typename PlayerT, typename... Args>
     void AddPlayer(Args&&... args)
     {
-        players_.emplace_back(std::make_unique<PlayerT>(std::move(args)...));
+        players_.emplace_back(std::make_unique<PlayerT>(std::forward<Args>(args)...));
         players_.back()->SetMoney(config_.InitMoney);
         players_.back()->SetGame(this);
 

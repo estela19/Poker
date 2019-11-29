@@ -1,22 +1,20 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-#include <Server/Server.h>
+#include <Server/Connection.h>
+#include <Server/GameManager.h>
 
 #include <memory.h>
 #include <spdlog/spdlog.h>
 
 using asio::ip::tcp;
 
-Session::Session(asio::io_context& ioContext, short port, std::size_t bufSize)
-    : socket_(ioContext),
-      acceptor_(ioContext, tcp::endpoint(tcp::v4(), port)),
-      buffer_(new char[bufSize]),
-      bufSize_(bufSize)
+Connection::Connection(asio::io_context& ioContext, std::size_t bufSize)
+    : socket_(ioContext), buffer_(new char[bufSize]), bufSize_(bufSize)
 {
     // Do nothing
 }
 
-Session::~Session()
+Connection::~Connection()
 {
     if (buffer_)
     {
@@ -24,30 +22,29 @@ Session::~Session()
     }
 }
 
-void Session::Start()
+void Connection::Start(int ID)
 {
-    acceptor_.async_accept(
-        socket_, [this](asio::error_code error) { acceptComplete(error); });
+    id_ = ID;
+
+    GameManager::Get().JoinGame(*this);
 }
 
-void Session::Write(const std::string_view& data)
+int Connection::ConnectionID() const
+{
+    return id_;
+}
+
+tcp::socket& Connection::Socket()
+{
+    return socket_;
+}
+
+void Connection::Write(const std::string_view& data)
 {
     write(data, data.size());
 }
 
-void Session::acceptComplete(const asio::error_code& error)
-{
-    if (!error)
-    {
-        read();
-    }
-    else
-    {
-        spdlog::error("Cannot accept");
-    }
-}
-
-void Session::read()
+void Connection::read()
 {
     socket_.async_read_some(asio::buffer(buffer_, bufSize_),
                             [this](asio::error_code error, std::size_t size) {
@@ -55,17 +52,18 @@ void Session::read()
                             });
 }
 
-void Session::readComplete(const asio::error_code& error, std::size_t size)
+void Connection::readComplete(const asio::error_code& error, std::size_t size)
 {
     if (error)
     {
         if (error == asio::error::eof)
         {
-            spdlog::error("Client disconnected.");
+            spdlog::info("[Connection {}] Client disconnected.", id_);
         }
         else
         {
-            spdlog::error("Read error {}", error.message());
+            spdlog::error("[Connection {}] Read error {}", id_,
+                          error.message());
         }
 
         reset();
@@ -80,7 +78,7 @@ void Session::readComplete(const asio::error_code& error, std::size_t size)
     }
 }
 
-void Session::write(const asio::string_view& data, std::size_t size)
+void Connection::write(const asio::string_view& data, std::size_t size)
 {
     asio::async_write(socket_, asio::buffer(data, bufSize_),
                       [this](asio::error_code error, std::size_t size) {
@@ -88,17 +86,15 @@ void Session::write(const asio::string_view& data, std::size_t size)
                       });
 }
 
-void Session::writeComplete(const asio::error_code&, std::size_t)
+void Connection::writeComplete(const asio::error_code&, std::size_t)
 {
     // Do nothing
 }
 
-void Session::reset()
+void Connection::reset()
 {
     if (socket_.is_open())
     {
         socket_.close();
     }
-
-    Start();
 }

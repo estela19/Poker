@@ -1,21 +1,28 @@
 // Copyright(C) 2019 Sooyeon Kim, Gyeonguk Chae, Junyeong Park
 
-#ifndef SERVER_SERVER_H
-#define SERVER_SERVER_H
+#ifndef SERVER_CONNECTION_H
+#define SERVER_CONNECTION_H
 
 #include <asio.hpp>
 
+#include <memory>
 #include <string_view>
 
-class Session final
+class Connection final
 {
  public:
-    Session(asio::io_context& ioContext, short port, std::size_t bufSize = 8096);
-    ~Session();
+    using Ptr = std::shared_ptr<Connection>;
 
-    void Start();
+ public:
+    Connection(asio::io_context& ioContext, std::size_t bufSize = 8096);
+    ~Connection();
 
-	void Write(const std::string_view& data);
+	void Start(int ID);
+
+    int ConnectionID() const;
+    asio::ip::tcp::socket& Socket();
+
+    void Write(const std::string_view& data);
 
  private:
     void readComplete(const asio::error_code& error, std::size_t size);
@@ -26,14 +33,12 @@ class Session final
     void reset();
     void read();
 
-	void acceptComplete(const asio::error_code& error);
-
  private:
+    int id_ = -1;
     asio::ip::tcp::socket socket_;
-    asio::ip::tcp::acceptor acceptor_;
 
     char* buffer_;
     std::size_t bufSize_;
 };
 
-#endif  // SERVER_SERVER_H
+#endif  // SERVER_CONNECTION_H
