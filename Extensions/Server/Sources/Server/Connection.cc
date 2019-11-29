@@ -8,12 +8,8 @@
 
 using asio::ip::tcp;
 
-Connection::Connection(asio::io_context& ioContext,
-                       std::function<void()> resetCallback, std::size_t bufSize)
-    : socket_(ioContext),
-      buffer_(new char[bufSize]),
-      bufSize_(bufSize),
-      resetCallback_(std::move(resetCallback))
+Connection::Connection(asio::io_context& ioContext, std::size_t bufSize)
+    : socket_(ioContext), buffer_(new char[bufSize]), bufSize_(bufSize)
 {
     // Do nothing
 }
@@ -31,6 +27,12 @@ void Connection::Start(int ID)
     id_ = ID;
 
     GameManager::Get().JoinGame(*this);
+    read();
+}
+
+void Connection::SetResetCallback(std::function<void()> callback)
+{
+    resetCallback_ = std::move(callback);
 }
 
 int Connection::ConnectionID() const
@@ -85,8 +87,7 @@ void Connection::readComplete(const asio::error_code& error, std::size_t size)
 void Connection::write(const std::string& data)
 {
     asio::async_write(socket_, asio::buffer(data),
-                      [](asio::error_code error, std::size_t size) {
-                      });
+                      [](asio::error_code error, std::size_t size) {});
 }
 
 void Connection::writeComplete(const asio::error_code&, std::size_t)
@@ -100,6 +101,6 @@ void Connection::reset()
     {
         socket_.close();
 
-		resetCallback_();
+        resetCallback_();
     }
 }

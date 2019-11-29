@@ -6,15 +6,17 @@
 #include <asio.hpp>
 
 #include <functional>
+#include <future>
 #include <string_view>
 
 class Connection final
 {
  public:
-    Connection(asio::io_context& ioContext, std::function<void()> resetCallback, std::size_t bufSize = 8096);
+    Connection(asio::io_context& ioContext, std::size_t bufSize = 8096);
     ~Connection();
 
-	void Start(int ID);
+    void Start(int ID);
+    void SetResetCallback(std::function<void()> callback);
 
     int ConnectionID() const;
     asio::ip::tcp::socket& Socket();
@@ -37,7 +39,7 @@ class Connection final
     char* buffer_;
     std::size_t bufSize_;
 
-	std::function<void()> resetCallback_;
+    std::function<void()> resetCallback_;
 };
 
 #endif  // SERVER_CONNECTION_H

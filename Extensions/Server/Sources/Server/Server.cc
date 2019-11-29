@@ -14,10 +14,8 @@ Server::Server(asio::io_context& ioContext, short port)
 
 void Server::start()
 {
-    Connection* connection;
-
-    connection =
-        new Connection(ioContext_, [connection]() { delete connection; });
+    Connection* connection = new Connection(ioContext_);
+    connection->SetResetCallback([connection]() { delete connection; });
 
     acceptor_.async_accept(connection->Socket(),
                            [=](const asio::error_code& error) {
@@ -25,14 +23,13 @@ void Server::start()
                            });
 }
 
-void Server::acceptComplete(const asio::error_code& error,
-                            Connection* conn)
+void Server::acceptComplete(const asio::error_code& error, Connection* conn)
 {
     if (!error)
     {
         conn->Start(connectCount_.load());
         ++connectCount_;
 
-		start();
-	}
+        start();
+    }
 }
