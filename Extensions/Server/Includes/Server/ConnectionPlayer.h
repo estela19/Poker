@@ -6,15 +6,33 @@
 #include <Poker/Players/Player.h>
 #include <Server/Connection.h>
 
+#include <nlohmann/json.hpp>
+
 class ConnectionPlayer final : public Poker::Player
 {
  public:
     ConnectionPlayer(Connection& conn);
 
-    std::size_t RequireOpenCard() const override;
-    Poker::ITask::Ptr RequireBetting() const override;
+	void OnGameStarted() override;
+    std::size_t RequireOpenCard() override;
+    Poker::ITask::Ptr RequireBetting() override;
 
     Connection& conn;
+    std::string name;
+    std::size_t ID;
+
+ private:
+    void addType(nlohmann::json& j, int type) const;
+    void addMyName(nlohmann::json& j) const;
+    void addOpName(nlohmann::json& j) const;
+    void addMyCardList(nlohmann::json& j) const;
+    void addOpCardList(nlohmann::json& j) const;
+    void addMyMoney(nlohmann::json& j) const;
+    void addOpMoney(nlohmann::json& j) const;
+    void addTotalMoney(nlohmann::json& j) const;
+    void addValidBetMoney(nlohmann::json& j) const;
+    void addValid(nlohmann::json& j) const;
+    void addWinner(nlohmann::json& j) const;
 };
 
 #endif  // SERVER_SESSION_PLAYER_H

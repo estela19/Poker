@@ -12,9 +12,9 @@ namespace Poker
 class RandomPlayer : public Player
 {
  public:
-    std::size_t RequireOpenCard() const override;
+    std::size_t RequireOpenCard() override;
 
-    ITask::Ptr RequireBetting() const override;
+    ITask::Ptr RequireBetting() override;
 
     std::string ToString() const override;
 };

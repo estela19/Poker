@@ -20,7 +20,7 @@ ConsolePlayer::ConsolePlayer(std::size_t playerId) : playerId_(playerId)
     // Do nothing
 }
 
-std::size_t ConsolePlayer::RequireOpenCard() const
+std::size_t ConsolePlayer::RequireOpenCard()
 {
     std::size_t bet = 4;
 
@@ -36,7 +36,7 @@ std::size_t ConsolePlayer::RequireOpenCard() const
     return bet;
 }
 
-ITask::Ptr ConsolePlayer::RequireBetting() const
+ITask::Ptr ConsolePlayer::RequireBetting()
 {
     std::vector<TaskType> valid = GetGame().ValidTasks();
     std::size_t choice = valid.size();
@@ -105,14 +105,14 @@ ITask::Ptr ConsolePlayer::RequireBetting() const
     return nullptr;
 }
 
-void ConsolePlayer::OnBettingDone() const
+void ConsolePlayer::OnBettingDone()
 {
     std::cout << ToString();
     std::cout << "Game Total money: " << GetGame().GetMoney() << std::endl;
     std::cout << std::endl;
 }
 
-void ConsolePlayer::SuccessFlag() const
+void ConsolePlayer::SuccessFlag()
 {
     std::cout << std::endl << "Ended" << std::endl << std::endl;
 }

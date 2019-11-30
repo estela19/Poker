@@ -27,12 +27,24 @@ void Connection::Start(int ID)
     id_ = ID;
 
     GameManager::Get().JoinGame(*this);
-    read();
 }
 
 void Connection::Stop()
 {
     reset();
+}
+
+std::string Connection::Read()
+{
+    asio::error_code error;
+    auto length = socket_.read_some(asio::buffer(buffer_, bufSize_), error);
+
+    if (!error)
+    {
+        return std::string(buffer_, length);
+	}
+    
+	return "";
 }
 
 void Connection::SetResetCallback(std::function<void()> callback)
@@ -53,6 +65,11 @@ int Connection::ConnectionID() const
 tcp::socket& Connection::Socket()
 {
     return socket_;
+}
+
+std::string Connection::Address() const
+{
+    return socket_.remote_endpoint().address().to_string();
 }
 
 void Connection::Write(const std::string& data)

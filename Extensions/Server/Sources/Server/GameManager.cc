@@ -6,6 +6,8 @@
 
 #include <spdlog/spdlog.h>
 
+using namespace std::chrono_literals;
+
 void GameManager::JoinGame(Connection& conn)
 {
     if (!HasEmptyGame())
@@ -20,14 +22,15 @@ void GameManager::JoinGame(Connection& conn)
 
     auto& game = games_.back();
     game.AddPlayer<ConnectionPlayer>(conn);
+
     spdlog::info("[Connection {}] New player added.", conn.ConnectionID());
 
     if (game.GetPlayerCount() == 2)
     {
         spdlog::info("[Connection {}] Game started.", conn.ConnectionID());
 
-        (void)std::async(Poker::GameManager::ProcessGame, std::ref(game),
-                         Poker::GameStatus::BEGIN_TURN);
+        std::async(Poker::GameManager::ProcessGame, std::ref(game),
+                         Poker::GameStatus::BEGIN_TURN).wait_for(1ms);
     }
 }
 
@@ -35,33 +38,15 @@ void GameManager::RemovePlayerFromGame(Poker::Player* player)
 {
     auto& refPlayer = static_cast<ConnectionPlayer&>(*player);
 
-    std::size_t playerIdx = 0;
-    for (std::size_t i = 0; i < player->GetGame().GetPlayerCount(); ++i)
-    {
-        auto& p =
-            static_cast<ConnectionPlayer&>(player->GetGame().GetPlayer(i));
+    std::size_t playerIdx = (refPlayer.ID == 0) ? 1 : 0;
+    auto& p =
+        static_cast<ConnectionPlayer&>(player->GetGame().GetPlayer(playerIdx));
 
-        if (p.conn.ConnectionID() != refPlayer.conn.ConnectionID())
-        {
-            p.conn.Write(R"({
-				"Type": 7
-				})");
+    p.conn.Write(R"({
+		"Type": 7
+		})");
 
-			p.conn.Stop();
-        }
-        else
-        {
-            playerIdx = i;
-        }
-    }
-
-    games_.erase(std::find_if(
-        begin(games_), end(games_),
-        [&refPlayer, &playerIdx](const Poker::Game& game) {
-            return (
-                static_cast<const ConnectionPlayer&>(game.GetPlayer(playerIdx))
-                    .conn.ConnectionID() == refPlayer.conn.ConnectionID());
-        }));
+    p.conn.Stop();
 }
 
 bool GameManager::HasEmptyGame()

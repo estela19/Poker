@@ -75,6 +75,8 @@ class Game final
     std::size_t GetMaxRaisedMoney() const;
     void SetMaxRaisedMoney(std::size_t money);
 
+	Player* Winner = nullptr;
+
  private:
     void fillCards();
     Card popCard();

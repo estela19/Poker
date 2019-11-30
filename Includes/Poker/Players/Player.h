@@ -56,17 +56,21 @@ class Player
     void SetAllin(bool allin);
     bool IsAllin() const;
 
-    virtual std::size_t RequireOpenCard() const = 0;
-
-    virtual ITask::Ptr RequireBetting() const = 0;
-
-    virtual std::string ToString() const;
-
-    virtual void OnBettingDone() const
+    virtual void OnGameStarted()
     {
     }
 
-    virtual void SuccessFlag() const
+    virtual std::size_t RequireOpenCard() = 0;
+
+    virtual ITask::Ptr RequireBetting() = 0;
+
+    virtual std::string ToString() const;
+
+    virtual void OnBettingDone()
+    {
+    }
+
+    virtual void SuccessFlag()
     {
     }
 

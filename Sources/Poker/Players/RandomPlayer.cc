@@ -8,14 +8,14 @@
 
 namespace Poker
 {
-std::size_t RandomPlayer::RequireOpenCard() const
+std::size_t RandomPlayer::RequireOpenCard()
 {
     using Random = effolkronium::random_static;
 
     return Random::get<std::size_t>(0u, GetDeck().Size() - 1);
 }
 
-ITask::Ptr RandomPlayer::RequireBetting() const 
+ITask::Ptr RandomPlayer::RequireBetting() 
 { 
 	return std::make_unique<FoldTask>();
 }

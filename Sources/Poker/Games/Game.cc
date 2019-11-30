@@ -25,6 +25,15 @@ void Game::BeginTurn()
         throw std::logic_error("No players inserted");
     }
 
+    if (!Winner)
+    {
+        for (auto& p : players_)
+        {
+            p->OnGameStarted();
+		}
+    }
+
+    Winner = nullptr;
     cards_.clear();
     fillCards();
 
@@ -228,6 +237,7 @@ void Game::EndTurn()
         }
     }
 
+    Winner = winner;
     turn_.Current()->SuccessFlag();
 }
 

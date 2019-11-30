@@ -10,10 +10,10 @@ class ConsolePlayer : public Poker::Player
  public:
     ConsolePlayer(std::size_t playerId);
 
-    std::size_t RequireOpenCard() const override;
-    Poker::ITask::Ptr RequireBetting() const override;
-    void OnBettingDone() const override;
-    void SuccessFlag() const override;
+    std::size_t RequireOpenCard() override;
+    Poker::ITask::Ptr RequireBetting() override;
+    void OnBettingDone() override;
+    void SuccessFlag() override;
 
     std::string ToString() const override;
 

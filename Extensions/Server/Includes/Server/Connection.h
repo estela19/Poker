@@ -20,11 +20,15 @@ class Connection final
     void Start(int ID);
     void Stop();
 
+	std::string Read();
+
     void SetResetCallback(std::function<void()> callback);
     std::future<std::string> GetFuture();
 
     int ConnectionID() const;
     asio::ip::tcp::socket& Socket();
+
+	std::string Address() const;
 
     void Write(const std::string& data);
 
